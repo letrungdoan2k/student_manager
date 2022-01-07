@@ -4,7 +4,7 @@ namespace App\Repositories\Faculties;
 use App\Models\Faculty;
 use App\Repositories\BaseRepository;
 
-class FacultyReponsitory extends BaseRepository implements FacultyReponsitoryInterface
+class FacultyRepository extends BaseRepository implements FacultyRepositoryInterface
 {
     //lấy model tương ứng
     public function getModel()

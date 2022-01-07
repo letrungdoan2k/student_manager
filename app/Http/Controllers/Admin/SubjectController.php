@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Students\StudentRepositoryInterface;
+use App\Repositories\Subjects\SubjectRepositoryInterface;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class SubjectController extends Controller
 {
-    protected $studentRepository;
-
-    public function __construct(StudentRepositoryInterface $studentRepository)
-    {
-        $this->studentRepository = $studentRepository;
+    protected $subjectRepository;
+    public function __construct(SubjectRepositoryInterface $subjectRepository) {
+        $this->subjectRepository = $subjectRepository;
     }
 
     /**
@@ -22,9 +20,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = $this->studentRepository->getAll();
+        $subjects = $this->subjectRepository->getAll();
 
-        return view('admin.students.index', compact('students'));
+        return view('admin.subjects.index', compact('subjects'));
     }
 
     /**
@@ -34,7 +32,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.subjects.add');
     }
 
     /**
@@ -45,7 +43,9 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->subjectRepository->create($request->all());
+
+        return redirect(route('subjects.index'));
     }
 
     /**
@@ -67,7 +67,8 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $subject = $this->subjectRepository->find($id);
+        return view('admin.subjects.edit', compact('subject'));
     }
 
     /**
@@ -79,7 +80,8 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->subjectRepository->update($id, $request->all());
+        return redirect(route('subjects.index'));
     }
 
     /**
@@ -90,6 +92,7 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->subjectRepository->delete($id);
+        return redirect(route('subjects.index'));
     }
 }

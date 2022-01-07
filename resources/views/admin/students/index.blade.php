@@ -16,7 +16,7 @@
                         <th>Image</th>
                         <th>Faculty</th>
                         <th>
-                            <a href="{{route('faculties.create')}}" class="btn btn-primary">Add new</a>
+                            <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
                         </th>
                         </thead>
                         <tbody>
@@ -34,10 +34,10 @@
                                 </td>
                                 <td>{{$item->faculty}}</td>
                                 <td class="d-flex">
-                                    <a href="{{route('faculties.edit', ['faculty' => $item->id])}}"
+                                    <a href="{{route('students.edit', ['student' => $item->id])}}"
                                        class="btn btn-info">Edit</a>
-                                    {!! Form::open(['method' => 'DELETE', 'route' => ['faculties.destroy', 'faculty' => $item->id]]) !!}
-                                    {!! Form::submit('Remove', ['class' => 'btn btn-danger ml-2', 'data-dismiss' => 'modal']) !!}
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $item->id]]) !!}
+                                    {!! Form::submit('Remove', ['class' => 'btn btn-danger ml-2']) !!}
                                     {!! Form::close() !!}
                                 </td>
                             </tr>

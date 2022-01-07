@@ -3,18 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Students\StudentRepositoryInterface;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class Student_subjectController extends Controller
 {
-    protected $studentRepository;
-
-    public function __construct(StudentRepositoryInterface $studentRepository)
-    {
-        $this->studentRepository = $studentRepository;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = $this->studentRepository->getAll();
-
-        return view('admin.students.index', compact('students'));
+        //
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,7 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['namespace' => 'App\Http\Controllers\Admin'], function() {
-    Route::resource('faculties', 'FacultyController');
-    Route::resource('students', 'StudentController');
+
+Route::prefix('admin')->group(function () {
+    Route::group(['namespace' => 'App\Http\Controllers\Admin'], function () {
+        Route::get('/', 'DashboardController@index')->name('dashboard');
+        Route::resource('faculties', 'FacultyController');
+        Route::resource('students', 'StudentController');
+        Route::resource('subjects', 'SubjectController');
+    });
 });

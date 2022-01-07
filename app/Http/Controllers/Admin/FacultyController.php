@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
-use App\Repositories\Faculties\FacultyReponsitoryInterface;
+use App\Repositories\Faculties\FacultyRepositoryInterface;
 use Illuminate\Http\Request;
 
 class FacultyController extends Controller
 {
     protected $facultyRepository;
 
-    public function __construct(FacultyReponsitoryInterface $facultyRepository)
+    public function __construct(FacultyRepositoryInterface $facultyRepository)
     {
         $this->facultyRepository = $facultyRepository;
     }
@@ -46,9 +46,7 @@ class FacultyController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-
-        $this->facultyRepository->create($data);
+        $this->facultyRepository->create($request->all());
 
         return redirect(route('faculties.index'));
     }
@@ -85,8 +83,7 @@ class FacultyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-        $this->facultyRepository->update($id, $data);
+        $this->facultyRepository->update($id, $request->all());
         return redirect(route('faculties.index'));
     }
 

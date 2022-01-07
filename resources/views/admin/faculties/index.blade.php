@@ -9,11 +9,11 @@
                         <th>STT</th>
                         <th>Name</th>
                         <th>
-                            <a href="{{route('faculties.create')}}" class="btn btn-primary">Add new</a>
+                            <a href="{{route('faculties.create')}}" class="btn btn-primary">Add</a>
                         </th>
                         </thead>
                         <tbody>
-                        @foreach ($faculty as $key => $item)
+                        @foreach ($faculty as $item)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->name}}</td>
