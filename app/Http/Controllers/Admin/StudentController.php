@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Faculty;
+use App\Models\Student;
 use App\Repositories\Students\StudentRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -22,7 +24,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = $this->studentRepository->getAll();
+        $students = $this->studentRepository->getPage(10);
 
         return view('admin.students.index', compact('students'));
     }
@@ -34,7 +36,14 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $faculties = Faculty::all();
+        $students = new Student();
+        $method = 'POST';
+        $array = [
+            'route' => 'students.store',
+            'id' => ''
+        ];
+        return view('admin.students.createUpdate', compact('faculties', 'students', 'method', 'array'));
     }
 
     /**
@@ -67,7 +76,13 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $students = $this->studentRepository->find($id);
+        $method = 'PATCH';
+        $array = [
+            'route' => 'students.update',
+            'id' => $id
+        ];
+        return view('admin.subjects.createUpdate', compact('students', 'method', 'array'));
     }
 
     /**
@@ -90,6 +105,7 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->studentRepository->delete($id);
+        return redirect(route('students.index'));
     }
 }

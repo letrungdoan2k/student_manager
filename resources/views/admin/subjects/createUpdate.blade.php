@@ -4,15 +4,19 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Edit</h3>
+                    <h3 class="card-title">{{ !empty($array['id']) ? 'Edit' : 'Add' }}</h3>
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['method' => 'PUT', 'route' => ['subjects.update', $subject->id]]) !!}
+                    {!! Form::model($subjects, ['method' => $method, 'route' => [$array['route'], $array['id']]]) !!}
+                    <input type="hidden" name="id" value="{{!empty($array['id']) ? $subjects->id : ''}}">
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                {!!  Form::label('name', 'Name subject') !!}
-                                {!!  Form::text('name', $subject->name, ['class' => 'form-control']) !!}
+                                {!!  Form::label('name', 'subject name') !!}
+                                {!!  Form::text('name', !empty($array['id']) ? $subjects->name : '' , ['class' => 'form-control']) !!}
+                                @error('name')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-12 d-flex justify-content-end">
@@ -25,5 +29,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 @endsection

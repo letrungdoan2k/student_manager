@@ -18,10 +18,12 @@
                                 <td>{{($faculties->currentPage() - 1)*$faculties->perPage() + $loop->iteration}}</td>
                                 <td>{{$item->name}}</td>
                                 <td class="d-flex">
+                                    <a href="{{route('faculties.show', ['faculty' => $item->id])}}"
+                                       class="btn btn-info"><i class="bi bi-info-lg"></i></a>
                                     <a href="{{route('faculties.edit', ['faculty' => $item->id])}}"
-                                       class="btn btn-info">Edit</a>
+                                       class="btn btn-info ml-1"><i class="bi bi-pencil-square"></i></a>
                                     {!! Form::open(['method' => 'DELETE', 'route' => ['faculties.destroy', 'faculty' => $item->id]]) !!}
-                                    {!! Form::submit('Remove', ['class' => 'btn btn-danger ml-2', 'data-dismiss' => 'modal']) !!}
+                                        <button type="submit" class="bi bi-trash btn btn-danger ml-1"></button>
                                     {!! Form::close() !!}
                                 </td>
                             </tr>
@@ -34,6 +36,6 @@
     </div>
     <br>
     <div class="d-flex">
-        {{ $faculties->onEachSide(1)->links() }}
+        {{ $faculties->links() }}
     </div>
 @endsection

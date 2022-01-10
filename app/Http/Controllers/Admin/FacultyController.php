@@ -38,14 +38,17 @@ class FacultyController extends Controller
     {
         $faculties = new Faculty();
         $method = 'POST';
-        $array = ['faculties.store'];
-        return view('admin.faculties.createUpdate', compact('faculties','method', 'array'));
+        $array = [
+            'route' => 'faculties.update',
+            'id' => ''
+        ];
+        return view('admin.faculties.createUpdate', compact('faculties', 'method', 'array'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(FacultyRequest $request)
@@ -58,33 +61,37 @@ class FacultyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $faculties = $this->facultyRepository->find($id);
+        return view('admin.faculties.detail', compact('faculties'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $faculties = $this->facultyRepository->find($id);
         $method = 'PATCH';
-        $array = ['faculties.update', $id];
+        $array = [
+            'route' => 'faculties.update',
+            'id' => $id
+        ];
         return view('admin.faculties.createUpdate', compact('faculties', 'method', 'array'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(FacultyRequest $request, $id)
@@ -96,7 +103,7 @@ class FacultyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

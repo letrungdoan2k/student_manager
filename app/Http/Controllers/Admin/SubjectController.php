@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SubjectRequest;
+use App\Models\Subject;
 use App\Repositories\Subjects\SubjectRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = $this->subjectRepository->getAll();
+        $subjects = $this->subjectRepository->getPage(10);
 
         return view('admin.subjects.index', compact('subjects'));
     }
@@ -32,7 +34,13 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        return view('admin.subjects.add');
+        $subjects = new Subject();
+        $method = 'POST';
+        $array = [
+            'route' => 'subjects.store',
+            'id' => ''
+        ];
+        return view('admin.subjects.createUpdate', compact('subjects', 'method', 'array'));
     }
 
     /**
@@ -41,7 +49,7 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubjectRequest $request)
     {
         $this->subjectRepository->create($request->all());
 
@@ -56,7 +64,8 @@ class SubjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $subjects = $this->subjectRepository->find($id);
+        return view('admin.subjects.detail', compact('subjects'));
     }
 
     /**
@@ -67,8 +76,13 @@ class SubjectController extends Controller
      */
     public function edit($id)
     {
-        $subject = $this->subjectRepository->find($id);
-        return view('admin.subjects.edit', compact('subject'));
+        $subjects = $this->subjectRepository->find($id);
+        $method = 'PATCH';
+        $array = [
+            'route' => 'subjects.update',
+            'id' => $id
+        ];
+        return view('admin.subjects.createUpdate', compact('subjects', 'method', 'array'));
     }
 
     /**
@@ -78,7 +92,7 @@ class SubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SubjectRequest $request, $id)
     {
         $this->subjectRepository->update($id, $request->all());
         return redirect(route('subjects.index'));
