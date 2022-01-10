@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FacultyRequest;
 use App\Models\Faculty;
 use App\Repositories\Faculties\FacultyRepositoryInterface;
 use Illuminate\Http\Request;
@@ -23,9 +24,9 @@ class FacultyController extends Controller
      */
     public function index()
     {
-        $faculty = $this->facultyRepository->getAll();
+        $faculties = $this->facultyRepository->getPage(10);
 
-        return view('admin.faculties.index', compact('faculty'));
+        return view('admin.faculties.index', compact('faculties'));
     }
 
     /**
@@ -35,7 +36,10 @@ class FacultyController extends Controller
      */
     public function create()
     {
-        return view('admin.faculties.add');
+        $faculties = new Faculty();
+        $method = 'POST';
+        $array = ['faculties.store'];
+        return view('admin.faculties.createUpdate', compact('faculties','method', 'array'));
     }
 
     /**
@@ -44,7 +48,7 @@ class FacultyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FacultyRequest $request)
     {
         $this->facultyRepository->create($request->all());
 
@@ -70,8 +74,10 @@ class FacultyController extends Controller
      */
     public function edit($id)
     {
-        $faculty = $this->facultyRepository->find($id);
-        return view('admin.faculties.edit', compact('faculty'));
+        $faculties = $this->facultyRepository->find($id);
+        $method = 'PATCH';
+        $array = ['faculties.update', $id];
+        return view('admin.faculties.createUpdate', compact('faculties', 'method', 'array'));
     }
 
     /**
@@ -81,7 +87,7 @@ class FacultyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FacultyRequest $request, $id)
     {
         $this->facultyRepository->update($id, $request->all());
         return redirect(route('faculties.index'));

@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 interface RepositoryInterface
 {
+    public function getPage($pageNumber);
+
     /**
      * Get all
      * @return mixed

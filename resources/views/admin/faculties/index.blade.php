@@ -13,9 +13,9 @@
                         </th>
                         </thead>
                         <tbody>
-                        @foreach ($faculty as $item)
+                        @foreach ($faculties as $item)
                             <tr>
-                                <td>{{$loop->iteration}}</td>
+                                <td>{{($faculties->currentPage() - 1)*$faculties->perPage() + $loop->iteration}}</td>
                                 <td>{{$item->name}}</td>
                                 <td class="d-flex">
                                     <a href="{{route('faculties.edit', ['faculty' => $item->id])}}"
@@ -32,31 +32,8 @@
             </div>
         </div>
     </div>
-{{--    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"--}}
-{{--         aria-labelledby="exampleModalLabel"--}}
-{{--         aria-hidden="true">--}}
-{{--        <div class="modal-dialog" role="document">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title" id="exampleModalLabel">Warning!!!</h5>--}}
-{{--                    <button type="button" class="close" data-dismiss="modal"--}}
-{{--                            aria-label="Close">--}}
-{{--                        <span aria-hidden="true">&times;</span>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-{{--                <div class="modal-body">--}}
-{{--                    Are you sure you want to remove--}}
-{{--                </div>--}}
-{{--                <div class="modal-footer">--}}
-{{--                    <button type="button" class="btn btn-secondary"--}}
-{{--                            data-dismiss="modal">Close--}}
-{{--                    </button>--}}
-{{--                    <button type="button" class="btn btn-danger ml-2" data-toggle="modal"--}}
-{{--                            data-target="#exampleModal">--}}
-{{--                        Remove--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+    <br>
+    <div class="d-flex">
+        {{ $faculties->onEachSide(1)->links() }}
+    </div>
 @endsection

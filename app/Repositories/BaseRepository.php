@@ -28,6 +28,11 @@ abstract class BaseRepository implements RepositoryInterface
         );
     }
 
+    public function getPage($pageNumber)
+    {
+        return $this->model->orderByDesc('id')->paginate($pageNumber);
+    }
+
     public function getAll()
     {
         return $this->model->all();
