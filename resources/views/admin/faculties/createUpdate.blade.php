@@ -8,7 +8,7 @@
                 </div>
                 <div class="card-body">
                     {!! Form::model($faculties, ['method' => $method, 'route' => [$array['route'], $array['id']]]) !!}
-                    <input type="hidden" name="id" value="{{ !empty($array['id']) ? $faculties->id : ''}}">
+                    {!! Form::hidden('id', !empty($array['id']) ? $faculties->id : '') !!}
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">

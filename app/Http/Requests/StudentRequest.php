@@ -25,7 +25,7 @@ class StudentRequest extends FormRequest
     {
         return [
             'name' => 'required|max:50',
-            'birthday' => 'required|date_format:H:i|after:now()',
+            'birthday' => 'required',
             'phone' => 'required|min:9|numeric',
             'email' => 'required|email|unique:students',
             'address' => 'required',
