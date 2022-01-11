@@ -31,7 +31,7 @@ class StudentRequest extends FormRequest
             'address' => 'required',
             'gender' => 'required',
             'faculty_id' => 'required',
-            'image' => 'required|mimes:jpg,jpeg,png,gif'
+            'image' => 'required'
         ];
     }
 }

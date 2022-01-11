@@ -37,14 +37,15 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $faculties = Faculty::all();
+        $faculties = $this->studentRepository->arrFaculty();
+        $genders = $this->studentRepository->arrGender();
         $students = new Student();
         $method = 'POST';
         $array = [
             'route' => 'students.store',
             'id' => ''
         ];
-        return view('admin.students.createUpdate', compact('faculties', 'students', 'method', 'array'));
+        return view('admin.students.createUpdate', compact('faculties', 'genders', 'students', 'method', 'array'));
     }
 
     /**
@@ -55,7 +56,7 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
-        $this->studentRepository->create($request->all());
+        $this->studentRepository->createStudent($request->all());
 
         return redirect(route('students.index'));
     }
@@ -80,12 +81,14 @@ class StudentController extends Controller
     public function edit($id)
     {
         $students = $this->studentRepository->find($id);
+        $faculties = $this->studentRepository->arrFaculty();
+        $genders = $this->studentRepository->arrGender();
         $method = 'PATCH';
         $array = [
             'route' => 'students.update',
             'id' => $id
         ];
-        return view('admin.subjects.createUpdate', compact('students', 'method', 'array'));
+        return view('admin.students.createUpdate', compact( 'faculties', 'genders', 'students', 'method', 'array'));
     }
 
     /**

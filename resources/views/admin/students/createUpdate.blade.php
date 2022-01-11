@@ -6,8 +6,9 @@
                 <div class="card-header">
                     <h1 class="card-title">{{!empty($array['id']) ? 'Edit' : 'Add'}}</h1>
                 </div>
+{{--                @dd($errors)--}}
                 <div class="card-body">
-                    {!! Form::model($students, ['method' => $method, 'route' => [$array['route'], $array['id']]]) !!}
+                    {!! Form::model($students, ['method' => $method, 'route' => [$array['route'], $array['id']], 'enctype' => 'multipart/form-data']) !!}
                     {!! Form::hidden('id', !empty($array['id']) ? $students->id : '') !!}
                     <div class="row">
                         <div class="col-6">
@@ -18,9 +19,10 @@
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
-                                {!!  Form::label('email', 'Email:') !!}
-                                {!!  Form::email('email', !empty($array['id']) ? $students->email : '' , ['class' => 'form-control']) !!}
-                                @error('email')
+                                {!!  Form::label('faculty_id', 'Faculty:') !!}
+                                <br>
+                                {!! Form::select('faculty_id', $faculties, '', ['class' => 'form-control']) !!}
+                                @error('faculty_id')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
@@ -32,6 +34,9 @@
                                 <br>
                                 {!!  Form::label('image', 'Image:') !!}
                                 {!!  Form::file('image', ['class' => 'form-control']) !!}
+                                @if(!empty($array['id']))
+                                    <img src="{{asset('storage/' . $students->image)}}" width="80">
+                                @endif
                                 @error('image')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
@@ -39,6 +44,12 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
+                                {!!  Form::label('email', 'Email:') !!}
+                                {!!  Form::email('email', !empty($array['id']) ? $students->email : '' , ['class' => 'form-control']) !!}
+                                @error('email')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                                <br>
                                 {!!  Form::label('phone', 'Phone:') !!}
                                 {!!  Form::number('phone', !empty($array['id']) ? $students->phone : '' , ['class' => 'form-control']) !!}
                                 @error('phone')
@@ -52,7 +63,8 @@
                                 @enderror
                                 <br>
                                 {!!  Form::label('gender', 'Gender:') !!}
-                                {!!  Form::number('gender', !empty($array['id']) ? $students->gender : '' , ['class' => 'form-control']) !!}
+                                <br>
+                                {!! Form::select('gender', $genders, '', ['class' => 'form-control']) !!}
                                 @error('gender')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror

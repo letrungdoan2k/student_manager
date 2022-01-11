@@ -26,7 +26,7 @@
                         <td>{{$item->address}}</td>
                         <td>{{$item->phone}}</td>
                         <td>{{$item->email}}</td>
-                        <td>{{$item->gender}}</td>
+                        <td>{{$item->gender == 1 ? 'Nam' : 'Nữ'}}</td>
                         <td>
                             <img src="{{asset('storage/' . $item->image)}}" width="80">
                         </td>
