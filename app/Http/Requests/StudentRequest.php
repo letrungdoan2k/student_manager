@@ -23,7 +23,7 @@ class StudentRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $requestRule = [
             'name' => 'required|max:50',
             'birthday' => 'required',
             'phone' => 'required|min:9|numeric',
@@ -31,7 +31,12 @@ class StudentRequest extends FormRequest
             'address' => 'required',
             'gender' => 'required',
             'faculty_id' => 'required',
-            'image' => 'required'
+            'image' => 'mimes:jpg,jpeg,png,gif'
         ];
+        if($this->id == null){
+            $requestRule['image'] = "required|" . $requestRule['image'];
+        }
+
+        return $requestRule;
     }
 }

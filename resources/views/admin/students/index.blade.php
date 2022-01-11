@@ -30,7 +30,7 @@
                         <td>
                             <img src="{{asset('storage/' . $item->image)}}" width="80">
                         </td>
-                        <td>{{$item->faculties->name}}</td>
+                        <td>{{$item->faculty->name}}</td>
                         <td class="d-flex">
                             <a href="{{route('students.show', ['student' => $item->id])}}"
                                class="btn btn-info"><i class="bi bi-info-lg"></i></a>

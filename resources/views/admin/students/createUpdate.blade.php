@@ -9,19 +9,19 @@
 {{--                @dd($errors)--}}
                 <div class="card-body">
                     {!! Form::model($students, ['method' => $method, 'route' => [$array['route'], $array['id']], 'enctype' => 'multipart/form-data']) !!}
-                    {!! Form::hidden('id', !empty($array['id']) ? $students->id : '') !!}
+                    {!! Form::hidden('id', $students->id) !!}
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
                                 {!!  Form::label('name', 'Name:') !!}
-                                {!!  Form::text('name', !empty($array['id']) ? $students->name : '' , ['class' => 'form-control']) !!}
+                                {!!  Form::text('name', $students->name , ['class' => 'form-control']) !!}
                                 @error('name')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
                                 {!!  Form::label('faculty_id', 'Faculty:') !!}
                                 <br>
-                                {!! Form::select('faculty_id', $faculties, '', ['class' => 'form-control']) !!}
+                                {!! Form::select('faculty_id', $faculties, $students->faculty_id, ['class' => 'form-control']) !!}
                                 @error('faculty_id')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
@@ -64,7 +64,7 @@
                                 <br>
                                 {!!  Form::label('gender', 'Gender:') !!}
                                 <br>
-                                {!! Form::select('gender', $genders, '', ['class' => 'form-control']) !!}
+                                {!! Form::select('gender', $genders, $students->gender, ['class' => 'form-control']) !!}
                                 @error('gender')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror

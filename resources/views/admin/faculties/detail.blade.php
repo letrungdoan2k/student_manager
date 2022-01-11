@@ -2,6 +2,6 @@
 @section('content')
     <div>
         <h1>{{$faculties->name}}</h1>
-        <a href="{{route('faculties.index')}}" class="btn btn-danger">Thoát</a>
+        <a href="{{route('faculties.index')}}" class="btn btn-danger">Exit</a>
     </div>
 @endsection

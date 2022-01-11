@@ -27,6 +27,7 @@ class FacultyRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                'max:50',
                 Rule::unique('faculties')->ignore($this->id)
             ]
         ];

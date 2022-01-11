@@ -25,6 +25,7 @@ class StudentController extends Controller
      */
     public function index()
     {
+
         $students = $this->studentRepository->getPage(10);
 
         return view('admin.students.index', compact('students'));

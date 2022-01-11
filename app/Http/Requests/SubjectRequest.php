@@ -27,6 +27,7 @@ class SubjectRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                'max:50',
                 Rule::unique('subjects')->ignore($this->id)
             ]
         ];
