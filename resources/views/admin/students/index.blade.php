@@ -18,25 +18,25 @@
                 </th>
                 </thead>
                 <tbody>
-                @foreach ($students as $item)
+                @foreach ($students as $student)
                     <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$item->name}}</td>
-                        <td>{{$item->birthday}}</td>
-                        <td>{{$item->address}}</td>
-                        <td>{{$item->phone}}</td>
-                        <td>{{$item->email}}</td>
-                        <td>{{$item->gender == 1 ? 'Nam' : 'Nữ'}}</td>
+                        <td>{{($students->currentPage() - 1)*$students->perPage() + $loop->iteration}}</td>
+                        <td>{{$student->name}}</td>
+                        <td>{{$student->birthday}}</td>
+                        <td>{{$student->address}}</td>
+                        <td>{{$student->phone}}</td>
+                        <td>{{$student->email}}</td>
+                        <td>{{$student->gender == 1 ? 'Nam' : 'Nữ'}}</td>
                         <td>
-                            <img src="{{asset('storage/' . $item->image)}}" width="80">
+                            <img src="{{asset('storage/' . $student->image)}}" width="80">
                         </td>
-                        <td>{{$item->faculty->name}}</td>
+                        <td>{{$student->faculty->name}}</td>
                         <td class="d-flex">
-                            <a href="{{route('students.show', ['student' => $item->id])}}"
+                            <a href="{{route('students.show', ['student' => $student->id])}}"
                                class="btn btn-info"><i class="bi bi-info-lg"></i></a>
-                            <a href="{{route('students.edit', ['student' => $item->id])}}"
+                            <a href="{{route('students.edit', ['student' => $student->id])}}"
                                class="btn btn-info ml-1"><i class="bi bi-pencil-square"></i></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $item->id]]) !!}
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id]]) !!}
                             <button type="submit" class="bi bi-trash btn btn-danger ml-1"></button>
                             {!! Form::close() !!}
                         </td>

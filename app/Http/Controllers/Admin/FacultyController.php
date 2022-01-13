@@ -36,8 +36,8 @@ class FacultyController extends Controller
      */
     public function create()
     {
-        $faculties = $this->facultyRepository->newModel();
-        return view('admin.faculties.create_update', compact('faculties'));
+        $faculty = $this->facultyRepository->newModel();
+        return view('admin.faculties.create_update', compact('faculty'));
     }
 
     /**
@@ -61,8 +61,8 @@ class FacultyController extends Controller
      */
     public function show($id)
     {
-        $faculties = $this->facultyRepository->find($id);
-        return view('admin.faculties.detail', compact('faculties'));
+        $faculty = $this->facultyRepository->find($id);
+        return view('admin.faculties.detail', compact('faculty'));
     }
 
     /**
@@ -73,8 +73,8 @@ class FacultyController extends Controller
      */
     public function edit($id)
     {
-        $faculties = $this->facultyRepository->find($id);
-        return view('admin.faculties.create_update', compact('faculties'));
+        $faculty = $this->facultyRepository->find($id);
+        return view('admin.faculties.create_update', compact('faculty'));
     }
 
     /**

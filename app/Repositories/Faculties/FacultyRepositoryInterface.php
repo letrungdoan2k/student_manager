@@ -6,6 +6,5 @@ use App\Repositories\RepositoryInterface;
 interface FacultyRepositoryInterface extends RepositoryInterface
 {
 
-    public function newModel();
 
 }

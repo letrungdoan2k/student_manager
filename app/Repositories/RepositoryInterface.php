@@ -4,6 +4,9 @@ namespace App\Repositories;
 
 interface RepositoryInterface
 {
+
+    public function newModel();
+
     public function getPage($pageNumber);
 
     /**

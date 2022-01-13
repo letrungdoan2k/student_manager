@@ -4,16 +4,20 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ !empty($array['id']) ? 'Edit' : 'Add' }}</h3>
+                    <h3 class="card-title">{{ !empty($subject->id) ? 'Edit' : 'Add' }}</h3>
                 </div>
                 <div class="card-body">
-                    {!! Form::model($subjects, ['method' => $method, 'route' => [$array['route'], $array['id']]]) !!}
-                    {!! Form::hidden('id', !empty($array['id']) ? $subjects->id : '') !!}
+                    @if(!empty($subject->id))
+                        {!! Form::model($subject, ['method' => 'PUT', 'route' => ['subjects.update', $subject->id]]) !!}
+                    @else
+                        {!! Form::model($subject, ['method' => 'POST', 'route' => ['subjects.store']]) !!}
+                    @endif
+                    {!! Form::hidden('id', $subject->id) !!}
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
                                 {!!  Form::label('name', 'subject name') !!}
-                                {!!  Form::text('name', !empty($array['id']) ? $subjects->name : '' , ['class' => 'form-control']) !!}
+                                {!!  Form::text('name', $subject->name, ['class' => 'form-control']) !!}
                                 @error('name')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror

@@ -13,8 +13,5 @@ class FacultyRepository extends BaseRepository implements FacultyRepositoryInter
         return \App\Models\Faculty::class;
     }
 
-    public function newModel()
-    {
-        return $faculty = new Faculty();
-    }
+
 }

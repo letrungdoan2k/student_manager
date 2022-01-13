@@ -34,13 +34,8 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        $subjects = new Subject();
-        $method = 'POST';
-        $array = [
-            'route' => 'subjects.store',
-            'id' => ''
-        ];
-        return view('admin.subjects.createUpdate', compact('subjects', 'method', 'array'));
+        $subject = $this->subjectRepository->newModel();
+        return view('admin.subjects.create_update', compact('subject'));
     }
 
     /**
@@ -64,8 +59,8 @@ class SubjectController extends Controller
      */
     public function show($id)
     {
-        $subjects = $this->subjectRepository->find($id);
-        return view('admin.subjects.detail', compact('subjects'));
+        $subject = $this->subjectRepository->find($id);
+        return view('admin.subjects.detail', compact('subject'));
     }
 
     /**
@@ -76,13 +71,8 @@ class SubjectController extends Controller
      */
     public function edit($id)
     {
-        $subjects = $this->subjectRepository->find($id);
-        $method = 'PATCH';
-        $array = [
-            'route' => 'subjects.update',
-            'id' => $id
-        ];
-        return view('admin.subjects.createUpdate', compact('subjects', 'method', 'array'));
+        $subject = $this->subjectRepository->find($id);
+        return view('admin.subjects.create_update', compact('subject'));
     }
 
     /**

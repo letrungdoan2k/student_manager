@@ -13,16 +13,16 @@
                         </th>
                         </thead>
                         <tbody>
-                        @foreach ($subjects as $item)
+                        @foreach ($subjects as $subject)
                             <tr>
-                                <td>{{$loop->iteration}}</td>
-                                <td>{{$item->name}}</td>
+                                <td>{{($subjects->currentPage() - 1)*$subjects->perPage() + $loop->iteration}}</td>
+                                <td>{{$subject->name}}</td>
                                 <td class="d-flex">
-                                    <a href="{{route('subjects.show', ['subject' => $item->id])}}"
+                                    <a href="{{route('subjects.show', ['subject' => $subject->id])}}"
                                        class="btn btn-info"><i class="bi bi-info-lg"></i></a>
-                                    <a href="{{route('subjects.edit', ['subject' => $item->id])}}"
+                                    <a href="{{route('subjects.edit', ['subject' => $subject->id])}}"
                                        class="btn btn-info ml-1"><i class="bi bi-pencil-square"></i></a>
-                                    {!! Form::open(['method' => 'DELETE', 'route' => ['subjects.destroy', 'subject' => $item->id]]) !!}
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['subjects.destroy', 'subject' => $subject->id]]) !!}
                                     <button type="submit" class="bi bi-trash btn btn-danger ml-1"></button>
                                     {!! Form::close() !!}
                                 </td>

@@ -25,13 +25,13 @@ class StudentRequest extends FormRequest
     {
         $requestRule = [
             'name' => 'required|max:50',
-            'birthday' => 'required',
-            'phone' => 'required|min:9|numeric',
+            'birthday' => 'required|date',
+            'phone' => 'required|min:9|max:11|numeric',
             'email' => 'required|email|unique:students',
             'address' => 'required',
             'gender' => 'required',
             'faculty_id' => 'required',
-            'image' => 'mimes:jpg,jpeg,png,gif'
+            'image' => 'mimes:jpg,jpeg,png,gif|max:100|unique:students|'
         ];
         if($this->id == null){
             $requestRule['image'] = "required|" . $requestRule['image'];

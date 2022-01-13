@@ -40,13 +40,13 @@ class StudentController extends Controller
     {
         $faculties = $this->studentRepository->arrFaculty();
         $genders = $this->studentRepository->arrGender();
-        $students = new Student();
+        $student = $this->studentRepository->newModel();
         $method = 'POST';
         $array = [
             'route' => 'students.store',
             'id' => ''
         ];
-        return view('admin.students.createUpdate', compact('faculties', 'genders', 'students', 'method', 'array'));
+        return view('admin.students.createUpdate', compact('faculties', 'genders', 'student', 'method', 'array'));
     }
 
     /**
