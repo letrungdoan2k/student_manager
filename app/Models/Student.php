@@ -14,4 +14,12 @@ class Student extends Model
     public function faculty(){
         return $this->belongsTo(Faculty::class, 'faculty_id');
     }
+
+    const MALE = 'Nam';
+    const FEMALE = 'Nữ';
+
+    public function getGenderTextAttribute()
+    {
+        return $this->gender == 1 ? Student::MALE : Student::FEMALE;
+    }
 }

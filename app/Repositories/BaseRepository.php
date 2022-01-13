@@ -35,7 +35,7 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function getPage($pageNumber = 10)
     {
-        return $this->model->orderByDesc('id')->paginate($pageNumber);
+        return $this->model->orderByDesc('updated_at')->paginate($pageNumber);
     }
 
     public function getAll()
@@ -43,9 +43,9 @@ abstract class BaseRepository implements RepositoryInterface
         return $this->model->all();
     }
 
-    public function find($id)
+    public function findOrFail($id)
     {
-        $result = $this->model->find($id);
+        $result = $this->model->findOrFail($id);
 
         return $result;
     }
@@ -57,24 +57,15 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function update($id, $attributes = [])
     {
-        $result = $this->find($id);
-        if ($result) {
-            $result->update($attributes);
-            return $result;
-        }
+        $result = $this->findOrFail($id);
 
-        return false;
+        return $result;
     }
 
     public function delete($id)
     {
-        $result = $this->find($id);
-        if ($result) {
-            $result->delete();
+        $result = $this->findOrFail($id);
 
-            return true;
-        }
-
-        return false;
+        return $result;
     }
 }

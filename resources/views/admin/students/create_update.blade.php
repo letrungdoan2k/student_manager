@@ -8,9 +8,9 @@
                 </div>
                 <div class="card-body">
                     @if(!empty($student->id))
-                        {!! Form::model($student, ['method' => 'PUT', 'route' => ['students.update', $student->id]]) !!}
+                        {!! Form::model($student, ['method' => 'PUT', 'route' => ['students.update', $student->id], 'enctype' => 'multipart/form-data']) !!}
                     @else
-                        {!! Form::model($student, ['method' => 'POST', 'route' => ['students.store']]) !!}
+                        {!! Form::model($student, ['method' => 'POST', 'route' => ['students.store'], 'enctype' => 'multipart/form-data']) !!}
                     @endif
                     {!! Form::hidden('id', $student->id) !!}
                     <div class="row">
@@ -37,7 +37,7 @@
                                 <br>
                                 {!!  Form::label('image', 'Image:') !!}
                                 {!!  Form::file('image', ['class' => 'form-control']) !!}
-                                @if(!empty($array['id']))
+                                @if(!empty($student->id))
                                     <img src="{{asset('storage/' . $student->image)}}" width="80">
                                 @endif
                                 @error('image')
@@ -48,19 +48,19 @@
                         <div class="col-6">
                             <div class="form-group">
                                 {!!  Form::label('email', 'Email:') !!}
-                                {!!  Form::email('email', !empty($array['id']) ? $student->email : '' , ['class' => 'form-control']) !!}
+                                {!!  Form::email('email', $student->email, ['class' => 'form-control']) !!}
                                 @error('email')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
                                 {!!  Form::label('phone', 'Phone:') !!}
-                                {!!  Form::number('phone', !empty($array['id']) ? $student->phone : '' , ['class' => 'form-control']) !!}
+                                {!!  Form::number('phone', $student->phone, ['class' => 'form-control']) !!}
                                 @error('phone')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
                                 {!!  Form::label('address', 'Address:') !!}
-                                {!!  Form::text('address', !empty($array['id']) ? $student->address : '' , ['class' => 'form-control']) !!}
+                                {!!  Form::text('address', $student->address, ['class' => 'form-control']) !!}
                                 @error('address')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
