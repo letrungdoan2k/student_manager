@@ -23,7 +23,7 @@ class StudentFactory extends Factory
             "image" => "images/" . $imgPath,
             "phone" => $this->faker->regexify('/(01)[0-9]{8}/'),
             "email" => $this->faker->email,
-            "gender" => rand(1, 4)
+            "gender" => rand(1, 2)
         ];
     }
 }

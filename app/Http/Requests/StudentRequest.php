@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StudentRequest extends FormRequest
 {
@@ -29,15 +30,21 @@ class StudentRequest extends FormRequest
             'name' => 'required|max:50',
             'birthday' => 'required|date|before:now|after:' . $max_age,
             'phone' => 'required|numeric|digits_between:9,10',
-            'email' => 'required|email|unique:students',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('students')->ignore($this->id)
+            ],
             'address' => 'required|max:255',
             'gender' => 'required|between:1,2',
             'faculty_id' => 'required|exists:faculties,id',
             'image' => 'image',
         ];
+
         if ($this->id == null) {
             $requestRule['image'] = "required|" . $requestRule['image'];
         }
+
 
         return $requestRule;
     }

@@ -61,7 +61,7 @@ class FacultyController extends Controller
      */
     public function show($id)
     {
-        $faculty = $this->facultyRepository->find($id);
+        $faculty = $this->facultyRepository->findOrFail($id);
         return view('admin.faculties.detail', compact('faculty'));
     }
 
@@ -73,7 +73,7 @@ class FacultyController extends Controller
      */
     public function edit($id)
     {
-        $faculty = $this->facultyRepository->find($id);
+        $faculty = $this->facultyRepository->findOrFail($id);
         return view('admin.faculties.create_update', compact('faculty'));
     }
 

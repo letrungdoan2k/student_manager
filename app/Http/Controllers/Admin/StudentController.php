@@ -6,16 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 use App\Models\Faculty;
 use App\Models\Student;
+use App\Repositories\Faculties\FacultyRepositoryInterface;
 use App\Repositories\Students\StudentRepositoryInterface;
+use App\Repositories\Subjects\SubjectRepositoryInterface;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     protected $studentRepository;
+    protected $facultyRepository;
+    protected $subjectRepository;
 
-    public function __construct(StudentRepositoryInterface $studentRepository)
+    public function __construct(StudentRepositoryInterface $studentRepository, FacultyRepositoryInterface $facultyRepository, SubjectRepositoryInterface $subjectRepository)
     {
         $this->studentRepository = $studentRepository;
+        $this->facultyRepository = $facultyRepository;
+        $this->subjectRepository = $subjectRepository;
     }
 
     /**
@@ -38,10 +44,11 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $faculties = $this->studentRepository->arrFaculty();
+        $faculties = $this->studentRepository->arrayIdName($this->facultyRepository->getAll());
+        $subjects = $this->studentRepository->arrayIdName($this->subjectRepository->getAll());
         $genders = $this->studentRepository->arrGender();
         $student = $this->studentRepository->newModel();
-        return view('admin.students.create_update', compact('faculties', 'genders', 'student'));
+        return view('admin.students.create_update', compact('faculties', 'subjects', 'genders', 'student'));
     }
 
     /**
@@ -52,6 +59,7 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
+//        dd($request->all());
         $this->studentRepository->createStudent($request->all());
 
         return redirect(route('students.index'));
@@ -77,9 +85,13 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = $this->studentRepository->find($id);
-        $faculties = $this->studentRepository->arrFaculty();
+        if (!$student) {
+            return redirect(route('students.index'));
+        }
+        $faculties = $this->studentRepository->arrayIdName($this->facultyRepository->getAll());
+        $subjects = $this->studentRepository->arrayIdName($this->subjectRepository->getAll());
         $genders = $this->studentRepository->arrGender();
-        return view('admin.students.create_update', compact( 'faculties', 'genders', 'student'));
+        return view('admin.students.create_update', compact( 'faculties', 'genders', 'student', 'subjects'));
     }
 
     /**
@@ -91,7 +103,9 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->studentRepository->updateStudent($id, $request->all());
+
+        return redirect(route('students.index'));
     }
 
     /**
@@ -102,7 +116,7 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $this->studentRepository->delete($id);
+        $this->studentRepository->deleteStudent($id);
         return redirect(route('students.index'));
     }
 }

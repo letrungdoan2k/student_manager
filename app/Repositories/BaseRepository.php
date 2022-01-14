@@ -18,6 +18,11 @@ abstract class BaseRepository implements RepositoryInterface
     //lấy model tương ứng
     abstract public function getModel();
 
+    public function newModel()
+    {
+        return new $this->model;
+    }
+
     /**
      * Set model
      */
@@ -26,11 +31,6 @@ abstract class BaseRepository implements RepositoryInterface
         $this->model = app()->make(
             $this->getModel()
         );
-    }
-
-    public function newModel()
-    {
-        return new $this->model;
     }
 
     public function getPage($pageNumber = 10)
@@ -45,9 +45,12 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function findOrFail($id)
     {
-        $result = $this->model->findOrFail($id);
+        return $this->model->findOrFail($id);
+    }
 
-        return $result;
+    public function find($id)
+    {
+        return $this->model->find($id);
     }
 
     public function create($attributes = [])
@@ -58,14 +61,12 @@ abstract class BaseRepository implements RepositoryInterface
     public function update($id, $attributes = [])
     {
         $result = $this->findOrFail($id);
-
-        return $result;
+        return $result->update($attributes);
     }
 
     public function delete($id)
     {
         $result = $this->findOrFail($id);
-
-        return $result;
+        return $result->delete();
     }
 }

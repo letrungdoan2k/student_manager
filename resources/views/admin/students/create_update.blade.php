@@ -30,7 +30,7 @@
                                 @enderror
                                 <br>
                                 {!!  Form::label('birthday', 'Birthday:') !!}
-                                {!!  Form::date('birthday', \Carbon\Carbon::now() , ['class' => 'form-control']) !!}
+                                {!!  Form::date('birthday', !empty($student->id) ? $student->date : \Carbon\Carbon::now(), ['class' => 'form-control']) !!}
                                 @error('birthday')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
@@ -74,8 +74,40 @@
 
                             </div>
                         </div>
+                        <div class="col-12 d-flex justify-content-start mt-5">
+                            <br>
+                            <h1>Add Point</h1>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-4">
+                                    {!!  Form::label('subject_id', 'Subject:') !!}
+                                </div>
+                                <div class="col-4">
+                                    {!!  Form::label('point', 'Point:') !!}
+                                </div>
+                                <div class="col-4">
+                                    <i class="bi bi-plus-square-fill btn btn-primary"></i>
+                                </div>
+                            </div>
+                            <br>
+{{--                            @for($i = 1; $i <= 3; $i++)--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-4">--}}
+{{--                                        {!! Form::select('subject_id[]', $subjects, null, ['class' => 'form-control']) !!}--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-4">--}}
+{{--                                        {!!  Form::text('point[]', $student->point, ['class' => 'form-control']) !!}--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-4">--}}
+{{--                                        <button type="submit" class="bi bi-trash btn btn-danger"></button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <br>--}}
+{{--                            @endfor--}}
+                        </div>
                         <br>
-                        <div class="col-12 d-flex justify-content-end">
+                        <div class="col-12 d-flex justify-content-end mt-5">
                             <br>
                             <a href="{{route('students.index')}}" class="btn btn-danger">Hủy</a>
                             &nbsp;{!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}

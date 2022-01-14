@@ -13,7 +13,7 @@ class CreateStudenSubjectTable extends Migration
      */
     public function up()
     {
-        Schema::create('sudent_subject', function (Blueprint $table) {
+        Schema::create('student_subject', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('subject_id');

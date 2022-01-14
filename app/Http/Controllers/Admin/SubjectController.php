@@ -59,7 +59,7 @@ class SubjectController extends Controller
      */
     public function show($id)
     {
-        $subject = $this->subjectRepository->find($id);
+        $subject = $this->subjectRepository->findOrFail($id);
         return view('admin.subjects.detail', compact('subject'));
     }
 
@@ -71,7 +71,7 @@ class SubjectController extends Controller
      */
     public function edit($id)
     {
-        $subject = $this->subjectRepository->find($id);
+        $subject = $this->subjectRepository->findOrFail($id);
         return view('admin.subjects.create_update', compact('subject'));
     }
 
