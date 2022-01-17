@@ -59,7 +59,7 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
-//        dd($request->all());
+        dd($request->all());
         $this->studentRepository->createStudent($request->all());
 
         return redirect(route('students.index'));

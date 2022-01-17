@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <table class="table">
+            <table class="table table-striped">
                 <thead>
                 <th>STT</th>
                 <th>Name</th>
@@ -18,9 +18,10 @@
                 </th>
                 </thead>
                 <tbody>
+{{--                @dd($students->links())--}}
                 @foreach ($students as $student)
                     <tr>
-                        <td>{{($students->currentPage() - 1)*$students->perPage() + $loop->iteration}}</td>
+                        <td>{{($students->currentPage() - 1) * $students->perPage() + $loop->iteration}}</td>
                         <td>{{$student->name}}</td>
                         <td>{{$student->birthday}}</td>
                         <td>{{$student->address}}</td>
@@ -45,8 +46,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-12">
-            {{ $students->links() }}
+        <div class="col-12 justify-content-center">
+            <div>
+                {{ $students->links() }}
+            </div>
         </div>
     </div>
 @endsection

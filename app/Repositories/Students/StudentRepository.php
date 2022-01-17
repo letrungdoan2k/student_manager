@@ -24,12 +24,9 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         }
         $student = $this->model->create($attributes);
         if (isset($attributes['subject_id'])) {
-            for ($i = 1; $i <= count($attributes['subject_id']); $i++) {
-                $student->subjects->student_id = $student->id;
-                $student->subjects->subject_id = $attributes['subject_id'][$i];
-                $student->subjects->point = $attributes['point'][$i];
-//                dd($student->subjects);
-                $student->subjects->save();
+            for ($i = 0; $i < count($attributes['subject_id']); $i++) {
+                echo $i;
+                $student->subjects()->attach($attributes['subject_id'][$i], ['student_id' => $student->id, 'subject_id' => $attributes['subject_id'][$i], 'point' => $attributes['point'][$i]]);
             }
         }
     }

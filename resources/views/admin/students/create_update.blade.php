@@ -91,20 +91,20 @@
                                 </div>
                             </div>
                             <br>
-{{--                            @for($i = 1; $i <= 3; $i++)--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-4">--}}
-{{--                                        {!! Form::select('subject_id[]', $subjects, null, ['class' => 'form-control']) !!}--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-4">--}}
-{{--                                        {!!  Form::text('point[]', $student->point, ['class' => 'form-control']) !!}--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-4">--}}
-{{--                                        <button type="submit" class="bi bi-trash btn btn-danger"></button>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <br>--}}
-{{--                            @endfor--}}
+                            @for($i = 1; $i <= 3; $i++)
+                                <div class="row">
+                                    <div class="col-4">
+                                        {!! Form::select('subject_id[]', $subjects, null, ['class' => 'form-control']) !!}
+                                    </div>
+                                    <div class="col-4">
+                                        {!!  Form::text('point[]', $student->point, ['class' => 'form-control']) !!}
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="submit" class="bi bi-trash btn btn-danger"></button>
+                                    </div>
+                                </div>
+                                <br>
+                            @endfor
                         </div>
                         <br>
                         <div class="col-12 d-flex justify-content-end mt-5">
