@@ -20,8 +20,15 @@ class CreateStudenSubjectTable extends Migration
             $table->double('point');
             $table->timestamps();
 
-            $table->foreign('student_id')->references('id')->on('students');
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('student_id')
+                ->references('id')
+                ->on('students')
+                ->onDelete('cascade');
+
+            $table->foreign('subject_id')
+                ->references('id')
+                ->on('subjects')
+                ->onDelete('cascade');
         });
     }
 
@@ -32,6 +39,6 @@ class CreateStudenSubjectTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sudent_subject');
+        Schema::dropIfExists('student_subject');
     }
 }

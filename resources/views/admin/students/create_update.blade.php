@@ -87,24 +87,28 @@
                                     {!!  Form::label('point', 'Point:') !!}
                                 </div>
                                 <div class="col-4">
-                                    <i class="bi bi-plus-square-fill btn btn-primary"></i>
+                                    <i class="bi bi-plus-square-fill btn btn-primary" id="addForm"></i>
                                 </div>
                             </div>
                             <br>
-                            @for($i = 1; $i <= 3; $i++)
-                                <div class="row">
-                                    <div class="col-4">
-                                        {!! Form::select('subject_id[]', $subjects, null, ['class' => 'form-control']) !!}
-                                    </div>
-                                    <div class="col-4">
-                                        {!!  Form::text('point[]', $student->point, ['class' => 'form-control']) !!}
-                                    </div>
-                                    <div class="col-4">
-                                        <button type="submit" class="bi bi-trash btn btn-danger"></button>
-                                    </div>
-                                </div>
-                                <br>
-                            @endfor
+                            <div id="point-form">
+                                @if(!empty($student->id))
+                                    @foreach ($student->subjects as $item)
+                                        <div class="row mb-3">
+                                            <div class="col-4">
+                                                {!! Form::select('subject_id[]', $subjects, $item->pivot->subject_id, ['class' => 'form-control']) !!}
+                                            </div>
+                                            <div class="col-4">
+                                                {!!  Form::text('point[]', $item->pivot->point, ['class' => 'form-control']) !!}
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" onclick="onRemove(this, {{$item->id}})"
+                                                        class="bi bi-trash btn btn-danger"></button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
                         </div>
                         <br>
                         <div class="col-12 d-flex justify-content-end mt-5">
@@ -119,4 +123,29 @@
         </div>
 
     </div>
+@endsection
+@section('page-script')
+    <script>
+        console.log({{json_encode($subjects)}})
+        function onRemove(el) {
+            $(el).parent().parent().remove();
+        }
+        $(document).ready(function () {
+            $('#addForm').click(function () {
+                $('#point-form').append(`
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            {!! Form::select('subject_id[]', $subjects, null, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-4">
+                            {!!  Form::text('point[]', '', ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-4">
+                            <button type="button" onclick="onRemove(this)" class="bi bi-trash btn btn-danger"></button>
+                        </div>
+                    </div>
+`               );
+            })
+        });
+    </script>
 @endsection

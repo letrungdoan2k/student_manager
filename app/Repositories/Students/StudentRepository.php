@@ -5,6 +5,7 @@ namespace App\Repositories\Students;
 use App\Models\Faculty;
 use App\Models\Student;
 use App\Repositories\BaseRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class StudentRepository extends BaseRepository implements StudentRepositoryInterface
@@ -25,8 +26,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $student = $this->model->create($attributes);
         if (isset($attributes['subject_id'])) {
             for ($i = 0; $i < count($attributes['subject_id']); $i++) {
-                echo $i;
-                $student->subjects()->attach($attributes['subject_id'][$i], ['student_id' => $student->id, 'subject_id' => $attributes['subject_id'][$i], 'point' => $attributes['point'][$i]]);
+                $student->subjects()->attach($attributes['subject_id'][$i], ['student_id' => $student->id, 'subject_id' => $attributes['subject_id'][$i], 'point' => $attributes['point'][$i], 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
             }
         }
     }
@@ -52,7 +52,6 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $result = $this->findOrFail($id);
         $image = str_replace('images/', '', $result->image);
         Storage::delete($image);
-
         return $result->delete();
     }
 
