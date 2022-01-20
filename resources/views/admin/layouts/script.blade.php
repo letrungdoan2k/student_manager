@@ -3,8 +3,9 @@
 <script src="{{ asset('adminlte') }}/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-  $.widget.bridge('uibutton', $.ui.button)
+    $.widget.bridge('uibutton', $.ui.button)
 </script>
+@yield('script')
 <!-- Bootstrap 4 -->
 <script src="{{ asset('adminlte') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
@@ -27,4 +28,6 @@
 <script src="{{ asset('adminlte') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte') }}/dist/js/adminlte.js"></script>
+
+<script src="{{ asset('js') }}/create_update_student.js"></script>
 <!-- AdminLTE for demo purposes -->

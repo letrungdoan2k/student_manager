@@ -11,7 +11,5 @@ interface StudentRepositoryInterface extends RepositoryInterface
 
     public function deleteStudent($id);
 
-    public function arrayIdName($array);
-
     public function arrGender();
 }

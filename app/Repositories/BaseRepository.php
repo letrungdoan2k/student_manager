@@ -69,4 +69,9 @@ abstract class BaseRepository implements RepositoryInterface
         $result = $this->findOrFail($id);
         return $result->delete();
     }
+
+    public function arrayIdName($collection)
+    {
+        return $collection->pluck('name', 'id');
+    }
 }

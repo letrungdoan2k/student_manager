@@ -59,9 +59,10 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
+        dd($request->all());
         $this->studentRepository->createStudent($request->all());
 
-        return redirect(route('students.index'));
+        return redirect(route('students.index'))->with('success', 'Successfully added student');
     }
 
     /**
@@ -83,10 +84,7 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = $this->studentRepository->find($id);
-        if (!$student) {
-            return redirect(route('students.index'));
-        }
+        $student = $this->studentRepository->findOrFail($id);
         $faculties = $this->studentRepository->arrayIdName($this->facultyRepository->getAll());
         $subjects = $this->studentRepository->arrayIdName($this->subjectRepository->getAll());
         $genders = $this->studentRepository->arrGender();
@@ -102,9 +100,10 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($request->all());
         $this->studentRepository->updateStudent($id, $request->all());
 
-        return redirect(route('students.index'));
+        return redirect(route('students.index'))->with('success', 'Student update successfully');
     }
 
     /**
@@ -116,6 +115,6 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $this->studentRepository->deleteStudent($id);
-        return redirect(route('students.index'));
+        return redirect(route('students.index'))->with('success', 'Delete student successfully');
     }
 }

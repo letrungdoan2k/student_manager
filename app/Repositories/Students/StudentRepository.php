@@ -23,6 +23,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
             $imgPath = str_replace('public/', '', $imgPath);
             $attributes['image'] = $imgPath;
         }
+        dd($attributes['subject_id']);
         $student = $this->model->create($attributes);
         if (isset($attributes['subject_id'])) {
             for ($i = 0; $i < count($attributes['subject_id']); $i++) {
@@ -33,10 +34,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
 
     public function updateStudent($id, $attributes)
     {
-        $result = $this->find($id);
-        if (!$result) {
-            return redirect(route('students.index'));
-        }
+        $result = $this->findOrFail($id);
         if (!empty($attributes['image'])) {
             Storage::delete($result->image);
 
@@ -53,12 +51,6 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $image = str_replace('images/', '', $result->image);
         Storage::delete($image);
         return $result->delete();
-    }
-
-    public function arrayIdName($array)
-    {
-        $array = $array->pluck('name', 'id');
-        return $array;
     }
 
     public function arrGender()

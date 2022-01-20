@@ -93,16 +93,22 @@
                             <br>
                             <div id="point-form">
                                 @if(!empty($student->id))
-                                    @foreach ($student->subjects as $item)
+                                    @foreach ($student->subjects as $subject)
                                         <div class="row mb-3">
                                             <div class="col-4">
-                                                {!! Form::select('subject_id[]', $subjects, $item->pivot->subject_id, ['class' => 'form-control']) !!}
+                                                {!! Form::select('subject_id[]', $subjects, $subject->pivot->subject_id, ['class' => 'form-control']) !!}
                                             </div>
+                                            @error('subject_id[]')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                             <div class="col-4">
-                                                {!!  Form::text('point[]', $item->pivot->point, ['class' => 'form-control']) !!}
+                                                {!!  Form::text('point[]', $subject->pivot->point, ['class' => 'form-control']) !!}
                                             </div>
+                                            @error('point[]')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                             <div class="col-4">
-                                                <button type="button" onclick="onRemove(this, {{$item->id}})"
+                                                <button type="button" onclick="onRemove(this, {{$subject->id}})"
                                                         class="bi bi-trash btn btn-danger"></button>
                                             </div>
                                         </div>
@@ -113,7 +119,7 @@
                         <br>
                         <div class="col-12 d-flex justify-content-end mt-5">
                             <br>
-                            <a href="{{route('students.index')}}" class="btn btn-danger">Hủy</a>
+                            <a href="{{route('students.index')}}" class="btn btn-danger">Exit</a>
                             &nbsp;{!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
@@ -121,31 +127,12 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
-@section('page-script')
+
+@section("script")
+    @parent
     <script>
-        console.log({{json_encode($subjects)}})
-        function onRemove(el) {
-            $(el).parent().parent().remove();
-        }
-        $(document).ready(function () {
-            $('#addForm').click(function () {
-                $('#point-form').append(`
-                    <div class="row mb-3">
-                        <div class="col-4">
-                            {!! Form::select('subject_id[]', $subjects, null, ['class' => 'form-control']) !!}
-                        </div>
-                        <div class="col-4">
-                            {!!  Form::text('point[]', '', ['class' => 'form-control']) !!}
-                        </div>
-                        <div class="col-4">
-                            <button type="button" onclick="onRemove(this)" class="bi bi-trash btn btn-danger"></button>
-                        </div>
-                    </div>
-`               );
-            })
-        });
+        var subjects = `{!! json_encode($subjects->toArray(),JSON_UNESCAPED_UNICODE) !!}`;
     </script>
 @endsection

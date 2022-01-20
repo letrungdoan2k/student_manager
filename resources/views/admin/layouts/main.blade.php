@@ -71,6 +71,5 @@
 
 <!-- jQuery -->
 @include('admin.layouts.script')
-@yield('page-script')
 </body>
 </html>

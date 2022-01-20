@@ -50,7 +50,7 @@ class FacultyController extends Controller
     {
         $this->facultyRepository->create($request->all());
 
-        return redirect(route('faculties.index'));
+        return redirect(route('faculties.index'))->with('success', 'Successfully added faculty');
     }
 
     /**
@@ -87,7 +87,7 @@ class FacultyController extends Controller
     public function update(FacultyRequest $request, $id)
     {
         $this->facultyRepository->update($id, $request->all());
-        return redirect(route('faculties.index'));
+        return redirect(route('faculties.index'))->with('success', 'Faculty update successfully');
     }
 
     /**
@@ -99,6 +99,6 @@ class FacultyController extends Controller
     public function destroy($id)
     {
         $this->facultyRepository->delete($id);
-        return redirect(route('faculties.index'));
+        return redirect(route('faculties.index'))->with('success', 'Delete faculty successfully');
     }
 }

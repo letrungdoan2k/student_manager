@@ -48,7 +48,7 @@ class SubjectController extends Controller
     {
         $this->subjectRepository->create($request->all());
 
-        return redirect(route('subjects.index'));
+        return redirect(route('subjects.index'))->with('success', 'Successfully added subject');
     }
 
     /**
@@ -85,7 +85,7 @@ class SubjectController extends Controller
     public function update(SubjectRequest $request, $id)
     {
         $this->subjectRepository->update($id, $request->all());
-        return redirect(route('subjects.index'));
+        return redirect(route('subjects.index'))->with('success', 'Subject update successfully');
     }
 
     /**
@@ -97,6 +97,6 @@ class SubjectController extends Controller
     public function destroy($id)
     {
         $this->subjectRepository->delete($id);
-        return redirect(route('subjects.index'));
+        return redirect(route('subjects.index'))->with('success', 'Delete subject successfully');
     }
 }
