@@ -23,11 +23,15 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
             $imgPath = str_replace('public/', '', $imgPath);
             $attributes['image'] = $imgPath;
         }
-        dd($attributes['subject_id']);
         $student = $this->model->create($attributes);
         if (isset($attributes['subject_id'])) {
-                $student->subjects()->sync([$attributes['subject_id'] => ['point' => $attributes['point']]]);
-
+            $array = [];
+            for ($i = 0; $i < count($attributes['subject_id']); $i++) {
+                $array[$attributes['subject_id'][$i]] = ['point' => $attributes['point'][$i], 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()];
+            }
+            $student->subjects()->sync($array);
+        }else {
+            $student->subjects()->sync([]);
         }
     }
 
@@ -41,7 +45,16 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
             $imgPath = str_replace('public/', '', $imgPath);
             $attributes['image'] = $imgPath;
         }
-        return $result->update($attributes);
+        $result->update($attributes);
+        if (isset($attributes['subject_id'])) {
+            $array = [];
+            for ($i = 0; $i < count($attributes['subject_id']); $i++) {
+                $array[$attributes['subject_id'][$i]] = ['point' => $attributes['point'][$i], 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()];
+            }
+            $result->subjects()->sync($array);
+        }else {
+            $result->subjects()->sync([]);
+        }
     }
 
     public function deleteStudent($id)

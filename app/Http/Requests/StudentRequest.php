@@ -39,8 +39,8 @@ class StudentRequest extends FormRequest
             'gender' => 'required|between:1,2',
             'faculty_id' => 'required|exists:faculties,id',
             'image' => 'image',
-            'subject_id. *' => 'required|exists:subjects,id',
-            'point. *' => 'required|min:0|max:10'
+            'subject_id.*' => 'required|exists:subjects,id',
+            'point.*' => 'required|min:0|max:10'
         ];
 
         if ($this->id == null) {

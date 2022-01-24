@@ -92,7 +92,7 @@
                             </div>
                             <br>
                             <div id="point-form">
-                                @if(!empty($student->id))
+                                @if(!old())
                                     @foreach ($student->subjects as $subject)
                                         <div class="row mb-3">
                                             <div class="col-4">
@@ -113,6 +113,30 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                @else
+                                    @foreach(old('subject_id') as $key => $subject_id)
+                                        <div class="row mb-3">
+                                            <div class="col-4">
+                                                <select name="subject_id[]" onChange="changeSubject()"
+                                                        class="form-control">
+                                                    @foreach($subjects as $val => $subject)
+                                                    <option @if($subject_id == $val) selected @endif value="{{$val}}">{{$subject}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <input name="point[]" type="text" class="form-control"
+                                                       value="{{old('point')[$key]}}">
+                                                @error('point.' . $key)
+                                                <span class="text-danger">{{$message}}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" onclick="onRemove(this)"
+                                                        class="bi bi-trash btn btn-danger"></button>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 @endif
                             </div>
                         </div>
@@ -128,11 +152,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section("script")
-    @parent
-    <script>
-        var subjects = `{!! json_encode($subjects->toArray(),JSON_UNESCAPED_UNICODE) !!}`;
-    </script>
 @endsection

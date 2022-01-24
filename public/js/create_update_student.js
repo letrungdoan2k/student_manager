@@ -30,6 +30,8 @@ function filterSubject() {
     });
     return data;
 }
+
+setTimeout(filterSubject, 500)
 // 
 function changeSubject() {
     $("[name='subject_id[]']").each(function () {
@@ -44,6 +46,11 @@ function changeSubject() {
         );
     });
 }
+
+window.onload = function()
+{
+    changeSubject();
+};
 
 // onclick add form
 $(document).ready(function () {

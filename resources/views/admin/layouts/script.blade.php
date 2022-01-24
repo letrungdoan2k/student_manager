@@ -5,7 +5,6 @@
 <script>
     $.widget.bridge('uibutton', $.ui.button)
 </script>
-@yield('script')
 <!-- Bootstrap 4 -->
 <script src="{{ asset('adminlte') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
