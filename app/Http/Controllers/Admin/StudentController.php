@@ -54,12 +54,11 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StudentRequest $request)
     {
-        dd($request->all());
         $this->studentRepository->createStudent($request->all());
 
         return redirect(route('students.index'))->with('success', 'Successfully added student');
@@ -68,7 +67,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -79,7 +78,7 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -88,19 +87,18 @@ class StudentController extends Controller
         $faculties = $this->studentRepository->arrayIdName($this->facultyRepository->getAll());
         $subjects = $this->studentRepository->arrayIdName($this->subjectRepository->getAll());
         $genders = $this->studentRepository->arrGender();
-        return view('admin.students.create_update', compact( 'faculties', 'genders', 'student', 'subjects'));
+        return view('admin.students.create_update', compact('faculties', 'genders', 'student', 'subjects'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
         $this->studentRepository->updateStudent($id, $request->all());
 
         return redirect(route('students.index'))->with('success', 'Student update successfully');
@@ -109,7 +107,7 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -117,4 +115,13 @@ class StudentController extends Controller
         $this->studentRepository->deleteStudent($id);
         return redirect(route('students.index'))->with('success', 'Delete student successfully');
     }
+
+    //API function
+
+    public function listSubject()
+    {
+        $subjects = $this->subjectRepository->getAll();
+        return response()->json($subjects);
+    }
+
 }

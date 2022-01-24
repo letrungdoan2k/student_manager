@@ -26,9 +26,8 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         dd($attributes['subject_id']);
         $student = $this->model->create($attributes);
         if (isset($attributes['subject_id'])) {
-            for ($i = 0; $i < count($attributes['subject_id']); $i++) {
-                $student->subjects()->attach($attributes['subject_id'][$i], ['student_id' => $student->id, 'subject_id' => $attributes['subject_id'][$i], 'point' => $attributes['point'][$i], 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
-            }
+                $student->subjects()->sync([$attributes['subject_id'] => ['point' => $attributes['point']]]);
+
         }
     }
 
