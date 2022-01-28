@@ -48,12 +48,14 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         }
 
         // filter point
-        $minPoint = isset($request['from-point']) ? $request['from-point'] : 0;
-        $maxPoint = isset($request['to-point']) ? $request['to-point'] : 10;
-
-        return $query->with(['subjects' => function ($query) {
-            $query->wherePivot('point', '=', 5);
-        }])->orderByDesc('updated_at')->paginate($pageNumber);
+        if (!empty($request['from-point']) || !empty($request['to-point'])) {
+            $minPoint = isset($request['from-point']) ? $request['from-point'] : 0;
+            $maxPoint = isset($request['to-point']) ? $request['to-point'] : 10;
+            $query->whereHas('subjects', function ($query) use ($minPoint, $maxPoint) {
+                $query->where('point', '>=', $minPoint)->where('point', '<=', $maxPoint);
+            });
+        }
+        return $query->orderByDesc('updated_at')->paginate($pageNumber);
     }
 
     // create
