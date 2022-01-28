@@ -21,8 +21,15 @@ class Student extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'student_subject')->withPivot(['point']);
+        return $this->belongsToMany(Subject::class, 'student_subject')
+            ->withPivot('point')
+            ->withTimestamps();
+//        ->wherePivot('point', '=', 8);
     }
+
+//    public function wherePoint($min = 0, $max = 10){
+//        return $this->subjects()->wherePivot('point', '>=', $min)->wherePivot('point', '<=', $max);
+//    }
 
     public function getGenderTextAttribute()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Students;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -39,14 +39,12 @@ class StudentRequest extends FormRequest
             'gender' => 'required|between:1,2',
             'faculty_id' => 'required|exists:faculties,id',
             'image' => 'image',
-            'subject_id.*' => 'required|exists:subjects,id',
-            'point.*' => 'required|min:0|max:10'
+            'subjects.*' => 'required|numeric|exists:subjects,id',
+            'subject_id.*.point' => 'required|numeric|min:0|max:10',
         ];
-
         if ($this->id == null) {
             $requestRule['image'] = "required|" . $requestRule['image'];
         }
-
 
         return $requestRule;
     }

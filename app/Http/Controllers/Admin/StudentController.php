@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StudentRequest;
-use App\Models\Faculty;
-use App\Models\Student;
+use App\Http\Requests\Students\StudentRequest;
+use App\Http\Requests\Students\StudentSearchRequest;
 use App\Repositories\Faculties\FacultyRepositoryInterface;
 use App\Repositories\Students\StudentRepositoryInterface;
 use App\Repositories\Subjects\SubjectRepositoryInterface;
@@ -29,12 +28,12 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $students = $this->studentRepository->getPage(10);
-
-        return view('admin.students.index', compact('students'));
+        $request = $request->all();
+        $studentAll = $this->studentRepository->search($request);
+        $subjects = $this->subjectRepository->getAll();
+        return view('admin.students.index', compact('studentAll', 'subjects', 'request'));
     }
 
     /**

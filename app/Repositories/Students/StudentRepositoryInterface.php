@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Students;
 
 use App\Repositories\RepositoryInterface;
@@ -12,4 +13,6 @@ interface StudentRepositoryInterface extends RepositoryInterface
     public function deleteStudent($id);
 
     public function arrGender();
+
+    public function search($request, $pageNumber);
 }

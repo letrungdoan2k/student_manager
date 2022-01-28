@@ -1,5 +1,8 @@
 @extends('admin.layouts.main')
 @section('content')
+    {{--    @if(!empty($errors->all()))--}}
+    {{--        @dd($errors->all())--}}
+    {{--    @endif--}}
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -93,41 +96,44 @@
                             <br>
                             <div id="point-form">
                                 @if(!old())
-                                    @foreach ($student->subjects as $subject)
+                                    @foreach ($student->subjects as $key => $subject)
                                         <div class="row mb-3">
                                             <div class="col-4">
-                                                {!! Form::select('subject_id[]', $subjects, $subject->pivot->subject_id, ['class' => 'form-control']) !!}
+                                                {!! Form::select('subjects[]', $subjects, $subject->pivot->subject_id, ['class' => 'form-control', 'id' => 'option' . $key, 'onChange' => 'changeSubject(' . $key . ')']) !!}
+                                                @error('subject[]')
+                                                <span class="text-danger">{{$message}}</span>
+                                                @enderror
                                             </div>
-                                            @error('subject_id[]')
-                                            <span class="text-danger">{{$message}}</span>
-                                            @enderror
-                                            <div class="col-4">
-                                                {!!  Form::text('point[]', $subject->pivot->point, ['class' => 'form-control']) !!}
+                                            <div class="col-4" id="input{{$key}}">
+                                                {!! Form::number('subject_id[' . $subject->pivot->subject_id . '][point]', $subject->pivot->point, ['class' => 'form-control']) !!}
+                                                @error('subject_id')
+                                                <span class="text-danger">{{$message}}</span>
+                                                @enderror
                                             </div>
-                                            @error('point[]')
-                                            <span class="text-danger">{{$message}}</span>
-                                            @enderror
                                             <div class="col-4">
-                                                <button type="button" onclick="onRemove(this, {{$subject->id}})"
+                                                <button type="button" onclick="onRemove(this)"
                                                         class="bi bi-trash btn btn-danger"></button>
                                             </div>
                                         </div>
                                     @endforeach
                                 @else
-                                    @foreach(old('subject_id') as $key => $subject_id)
+                                    @foreach(old('subjects') as $key => $subject_id)
                                         <div class="row mb-3">
                                             <div class="col-4">
-                                                <select name="subject_id[]" onChange="changeSubject()"
-                                                        class="form-control">
-                                                    @foreach($subjects as $val => $subject)
-                                                    <option @if($subject_id == $val) selected @endif value="{{$val}}">{{$subject}}</option>
+                                                <select id="option{{$key}}" name="subjects[]"
+                                                        onChange="changeSubject({{$key}})" class="form-control">
+                                                    @foreach($subjects as $id => $subject)
+                                                        <option @if($id == $subject_id) selected
+                                                                @endif value="{{$id}}">{{$subject}}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('subjects.' . $key)
+                                                <span class="text-danger">{{$message}}</span>
+                                                @enderror
                                             </div>
-                                            <div class="col-4">
-                                                <input name="point[]" type="text" class="form-control"
-                                                       value="{{old('point')[$key]}}">
-                                                @error('point.' . $key)
+                                            <div class="col-4" id="input{{$key}}">
+                                                {!! Form::number('subject_id[' . $subject_id . '][point]', old('subject_id')[$subject_id]['point'], ['class' => 'form-control']) !!}
+                                                @error('subject_id.' . $subject_id . '.point')
                                                 <span class="text-danger">{{$message}}</span>
                                                 @enderror
                                             </div>
