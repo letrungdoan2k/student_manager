@@ -33,7 +33,10 @@ class StudentController extends Controller
         $request = $request->all();
         $studentAll = $this->studentRepository->search($request);
         $subjects = $this->subjectRepository->getAll();
-        return view('admin.students.index', compact('studentAll', 'subjects', 'request'));
+        $countSubject = $this->subjectRepository->count();
+        $studentDone = $this->studentRepository->done($countSubject);
+        $studentUnfinised = $this->studentRepository->unfinished($countSubject);
+        return view('admin.students.index', compact('studentAll', 'studentDone', 'studentUnfinised','subjects', 'request'));
     }
 
     /**

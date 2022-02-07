@@ -5,5 +5,5 @@ use App\Repositories\RepositoryInterface;
 
 interface SubjectRepositoryInterface extends RepositoryInterface
 {
-
+    public function count();
 }

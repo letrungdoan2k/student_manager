@@ -10,4 +10,9 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
     {
         return \App\Models\Subject::class;
     }
+
+    // count subjects
+    public function count() {
+        return $this->model->count();
+    }
 }

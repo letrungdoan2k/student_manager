@@ -111,4 +111,23 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         ];
         return $array;
     }
+
+    // Unfinished
+    public function unfinished($countSubject, $pageNumber = 10)
+    {
+        $query = $this->model->query();
+        $query->with('subjects')
+            ->whereHas('subjects', null, 0)
+            ->orWhereHas('subjects', null, '<', $countSubject);
+        $student = $query->orderByDesc('updated_at')->paginate($pageNumber);
+        return $student;
+    }
+
+    // Done
+    public function done($countSubject, $pageNumber = 10)
+    {
+        $query = $this->model->query();
+        $query->whereHas('subjects', null, $countSubject);
+        return $query->orderByDesc('updated_at')->paginate($pageNumber);
+    }
 }
