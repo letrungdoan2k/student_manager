@@ -74,7 +74,14 @@
                                 @error('gender')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
-
+                                @if(empty($student->id))
+                                    <br>
+                                    {!!  Form::label('password', 'Password(defaults):') !!}
+                                    {!!  Form::text('password', 'password', ['class' => 'form-control', 'placeholder' => 'password']) !!}
+                                    @error('password')
+                                    <span class="text-danger">{{$message}}</span>
+                                    @enderror
+                                @endif
                             </div>
                         </div>
                         <div class="col-12 d-flex justify-content-start mt-5">
@@ -95,7 +102,7 @@
                             </div>
                             <br>
                             <div id="point-form">
-                                @if(!old())
+                                @if(!old('subjects'))
                                     @foreach ($student->subjects as $key => $subject)
                                         <div class="row mb-3">
                                             <div class="col-4">

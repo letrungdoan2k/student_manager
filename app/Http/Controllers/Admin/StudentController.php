@@ -8,6 +8,7 @@ use App\Http\Requests\Students\StudentSearchRequest;
 use App\Repositories\Faculties\FacultyRepositoryInterface;
 use App\Repositories\Students\StudentRepositoryInterface;
 use App\Repositories\Subjects\SubjectRepositoryInterface;
+use App\Repositories\Users\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -15,12 +16,14 @@ class StudentController extends Controller
     protected $studentRepository;
     protected $facultyRepository;
     protected $subjectRepository;
+    protected $userRepository;
 
-    public function __construct(StudentRepositoryInterface $studentRepository, FacultyRepositoryInterface $facultyRepository, SubjectRepositoryInterface $subjectRepository)
+    public function __construct(StudentRepositoryInterface $studentRepository, FacultyRepositoryInterface $facultyRepository, SubjectRepositoryInterface $subjectRepository, UserRepositoryInterface $userRepository)
     {
         $this->studentRepository = $studentRepository;
         $this->facultyRepository = $facultyRepository;
         $this->subjectRepository = $subjectRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -36,7 +39,7 @@ class StudentController extends Controller
         $countSubject = $this->subjectRepository->count();
         $studentDone = $this->studentRepository->done($countSubject);
         $studentUnfinised = $this->studentRepository->unfinished($countSubject);
-        return view('admin.students.index', compact('studentAll', 'studentDone', 'studentUnfinised','subjects', 'request'));
+        return view('admin.students.index', compact('studentAll', 'studentDone', 'studentUnfinised', 'subjects', 'request'));
     }
 
     /**
@@ -61,8 +64,10 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
-        $this->studentRepository->createStudent($request->all());
-
+        $request = $request->all();
+        $request['password'] = bcrypt($request['password']);
+        $this->studentRepository->createStudent($request);
+        $this->userRepository->create($request);
         return redirect(route('students.index'))->with('success', 'Successfully added student');
     }
 

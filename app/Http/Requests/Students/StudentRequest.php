@@ -44,6 +44,7 @@ class StudentRequest extends FormRequest
         ];
         if ($this->id == null) {
             $requestRule['image'] = "required|" . $requestRule['image'];
+            $requestRule['password'] = 'required|min:6';
         }
 
         return $requestRule;
