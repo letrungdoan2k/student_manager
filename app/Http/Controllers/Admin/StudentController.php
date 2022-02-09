@@ -80,7 +80,8 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $student = $this->studentRepository->profile($id);
+        return view('admin.students.profile', compact('student'));
     }
 
     /**

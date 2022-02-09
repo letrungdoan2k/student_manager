@@ -96,7 +96,11 @@
                                 <td>
                                     <img src="{{asset('storage/' . $student->image)}}" width="80">
                                 </td>
-                                <td>{{$student->faculty->name}}</td>
+                                @if(!empty($student->faculty_id))
+                                    <td>{{$student->faculty->name}}</td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td class="d-flex">
                                     <a href="{{route('students.show', ['student' => $student->id])}}"
                                        class="btn btn-info"><i class="bi bi-info-lg"></i></a>
@@ -149,7 +153,11 @@
                                 <td>
                                     <img src="{{asset('storage/' . $student->image)}}" width="80">
                                 </td>
-                                <td>{{$student->faculty->name}}</td>
+                                @if(!empty($student->faculty_id))
+                                    <td>{{$student->faculty->name}}</td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td class="d-flex">
                                     <a href="{{route('students.show', ['student' => $student->id])}}"
                                        class="btn btn-info"><i class="bi bi-info-lg"></i></a>
@@ -202,7 +210,11 @@
                                 <td>
                                     <img src="{{asset('storage/' . $student->image)}}" width="80">
                                 </td>
-                                <td>{{$student->faculty->name}}</td>
+                                @if(!empty($student->faculty_id))
+                                    <td>{{$student->faculty->name}}</td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td class="d-flex">
                                     <a href="{{route('students.show', ['student' => $student->id])}}"
                                        class="btn btn-info"><i class="bi bi-info-lg"></i></a>

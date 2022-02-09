@@ -160,4 +160,11 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $query->whereHas('subjects', null, $countSubject);
         return $query->orderByDesc('updated_at')->paginate($pageNumber);
     }
+
+    // profile
+    public function profile($id)
+    {
+        $student = $this->model->query()->where('user_id', $id)->first();
+        return $student;
+    }
 }

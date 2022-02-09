@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,11 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('isLogin')->group(function () {
     Route::group(['namespace' => 'App\Http\Controllers\Admin'], function () {
         Route::get('/', 'DashboardController@index')->name('dashboard');
         Route::resource('faculties', 'FacultyController');
         Route::resource('students', 'StudentController');
         Route::resource('subjects', 'SubjectController');
     });
+});
+Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
+    Route::get('login', 'LoginController@loginForm')->name('login');
+    Route::post('login', 'LoginController@postLogin');
+
+    Route::get('signup', 'RegisterController@signupForm')->name('signup');
+    Route::post('signup', 'RegisterController@postSignup')->name('signup.store');
+
+    Route::any('logout', function(){
+        Auth::logout();
+        return redirect(route('login'));
+    })->name('logout');
 });

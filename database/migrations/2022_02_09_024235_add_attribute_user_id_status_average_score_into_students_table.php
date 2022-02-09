@@ -14,9 +14,9 @@ class AddAttributeUserIdStatusAverageScoreIntoStudentsTable extends Migration
     public function up()
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
-            $table->double('average_score');
-            $table->tinyInteger('status');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->double('average_score')->nullable();
+            $table->tinyInteger('status')->nullable();
 
             $table->foreign('user_id')
                 ->references('id')
