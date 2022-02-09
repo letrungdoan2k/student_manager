@@ -12,7 +12,7 @@ class Student extends Model
     const MALE = 'Nam';
     const FEMALE = 'Nữ';
 
-    protected $fillable = ['name', 'birthday', 'address', 'phone', 'email', 'gender', 'image', 'faculty_id'];
+    protected $fillable = ['name', 'birthday', 'address', 'phone', 'email', 'gender', 'image', 'faculty_id', 'user_id', 'average_score', 'status'];
 
     public function faculty()
     {

@@ -59,13 +59,26 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
     }
 
     // create
-    public function createStudent($attributes)
+    public function createStudent($attributes, $countSubject)
     {
         if (!empty($attributes['image'])) {
             $imgPath = $attributes['image']->store('public/images');
             $imgPath = str_replace('public/', '', $imgPath);
             $attributes['image'] = $imgPath;
         }
+        $stt = 0;
+        $attributes['status'] = 0;
+        $countPoint = null;
+        foreach ($attributes['subject_id'] as $subject){
+            $stt++;
+           $countPoint += $subject['point'];
+        }
+        $averagePoint = $countPoint/$stt;
+
+        if (count($attributes['subjects']) == $countSubject){
+            $attributes['status'] = 1;
+        }
+        $attributes['average_score'] = $averagePoint;
         $student = $this->model->create($attributes);
         $points = [];
         if (isset($attributes['subject_id'])) {
@@ -75,7 +88,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
     }
 
     //update
-    public function updateStudent($id, $attributes)
+    public function updateStudent($id, $attributes, $countSubject)
     {
         $result = $this->findOrFail($id);
         if (!empty($attributes['image'])) {
@@ -85,6 +98,19 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
             $imgPath = str_replace('public/', '', $imgPath);
             $attributes['image'] = $imgPath;
         }
+        $stt = 0;
+        $attributes['status'] = 0;
+        $countPoint = null;
+        foreach ($attributes['subject_id'] as $subject){
+            $stt++;
+            $countPoint += $subject['point'];
+        }
+        $averagePoint = $countPoint/$stt;
+
+        if (count($attributes['subjects']) == $countSubject){
+            $attributes['status'] = 1;
+        }
+        $attributes['average_score'] = $averagePoint;
         $result->update($attributes);
         $points = [];
         if (isset($attributes['subject_id'])) {

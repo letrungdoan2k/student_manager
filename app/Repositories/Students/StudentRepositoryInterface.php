@@ -6,9 +6,9 @@ use App\Repositories\RepositoryInterface;
 
 interface StudentRepositoryInterface extends RepositoryInterface
 {
-    public function createStudent($attributes);
+    public function createStudent($attributes, $countSubject);
 
-    public function updateStudent($id, $attributes);
+    public function updateStudent($id, $attributes, $countSubject);
 
     public function deleteStudent($id);
 

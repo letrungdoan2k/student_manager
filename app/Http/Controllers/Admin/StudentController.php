@@ -66,8 +66,9 @@ class StudentController extends Controller
     {
         $request = $request->all();
         $request['password'] = bcrypt($request['password']);
-        $this->studentRepository->createStudent($request);
-        $this->userRepository->create($request);
+        $request['user_id'] = $this->userRepository->create($request)->id;
+        $countSubject = $this->subjectRepository->count();
+        $this->studentRepository->createStudent($request, $countSubject);
         return redirect(route('students.index'))->with('success', 'Successfully added student');
     }
 
@@ -106,8 +107,8 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, $id)
     {
-        $this->studentRepository->updateStudent($id, $request->all());
-
+        $countSubject = $this->subjectRepository->count();
+        $this->studentRepository->updateStudent($id, $request->all(), $countSubject);
         return redirect(route('students.index'))->with('success', 'Student update successfully');
     }
 
