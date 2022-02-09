@@ -68,15 +68,17 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         }
         $stt = 0;
         $attributes['status'] = 0;
-        $countPoint = null;
-        foreach ($attributes['subject_id'] as $subject){
-            $stt++;
-           $countPoint += $subject['point'];
-        }
-        $averagePoint = $countPoint/$stt;
-
-        if (count($attributes['subjects']) == $countSubject){
-            $attributes['status'] = 1;
+        $countPoint = 0;
+        $averagePoint = 0;
+        if (isset($attributes['subjects'])) {
+            foreach ($attributes['subject_id'] as $subject) {
+                $stt++;
+                $countPoint += $subject['point'];
+            }
+            $averagePoint = $countPoint / $stt;
+            if (count($attributes['subjects']) == $countSubject) {
+                $attributes['status'] = 1;
+            }
         }
         $attributes['average_score'] = $averagePoint;
         $student = $this->model->create($attributes);
@@ -100,15 +102,17 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         }
         $stt = 0;
         $attributes['status'] = 0;
-        $countPoint = null;
-        foreach ($attributes['subject_id'] as $subject){
-            $stt++;
-            $countPoint += $subject['point'];
-        }
-        $averagePoint = $countPoint/$stt;
-
-        if (count($attributes['subjects']) == $countSubject){
-            $attributes['status'] = 1;
+        $countPoint = 0;
+        $averagePoint = 0;
+        if (isset($attributes['subjects'])) {
+            foreach ($attributes['subject_id'] as $subject) {
+                $stt++;
+                $countPoint += $subject['point'];
+            }
+            $averagePoint = $countPoint / $stt;
+            if (count($attributes['subjects']) == $countSubject) {
+                $attributes['status'] = 1;
+            }
         }
         $attributes['average_score'] = $averagePoint;
         $result->update($attributes);
