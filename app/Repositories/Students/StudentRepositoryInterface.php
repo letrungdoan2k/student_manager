@@ -15,4 +15,7 @@ interface StudentRepositoryInterface extends RepositoryInterface
     public function arrGender();
 
     public function search($request, $pageNumber);
+
+    public function profile($id);
+
 }

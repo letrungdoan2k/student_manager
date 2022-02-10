@@ -78,6 +78,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item ">
+                    {{-- <li class="nav-item menu-open"> --}}
+                    <a href="{{route('mail.index')}}" class="nav-link ">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            sendMail
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

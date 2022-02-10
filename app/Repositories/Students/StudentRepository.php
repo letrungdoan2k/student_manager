@@ -2,10 +2,11 @@
 
 namespace App\Repositories\Students;
 
-use App\Models\Faculty;
-use App\Models\Student;
+use App\Jobs\SendEmail;
+use App\Mail\SendMail;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class StudentRepository extends BaseRepository implements StudentRepositoryInterface
@@ -167,4 +168,25 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $student = $this->model->query()->where('user_id', $id)->first();
         return $student;
     }
+
+    // sendEmail
+    public function sendMail($request)
+    {
+        if ($request['action'] == 'all') {
+            $students = $this->model->all();
+            foreach ($students as $student) {
+                $data = [
+                    'name' => $student->name,
+                    'email' => $student->email,
+                    'title' => $request['title'],
+                    'content' => $request['content']
+                ];
+                $mail = new SendMail($data);
+                Mail::to($data['email'])->send($mail);
+//                SendEmail::dispatch($data)->delay(Carbon::now()->addSeconds(30));
+            }
+        }
+        return true;
+    }
+
 }
