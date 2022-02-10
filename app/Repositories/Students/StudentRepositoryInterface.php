@@ -18,4 +18,6 @@ interface StudentRepositoryInterface extends RepositoryInterface
 
     public function profile($id);
 
+    public function sendMail($pageNumber);
+
 }

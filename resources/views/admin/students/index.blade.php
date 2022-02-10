@@ -81,6 +81,7 @@
                         <th>Faculty</th>
                         <th>
                             <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
+                            <a href="{{route('mail.index')}}" class="btn btn-primary">point < 5</a>
                         </th>
                         </thead>
                         <tbody>
@@ -138,6 +139,7 @@
                         <th>Faculty</th>
                         <th>
                             <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
+                            <a href="{{route('mail.index')}}" class="btn btn-primary">point < 5</a>
                         </th>
                         </thead>
                         <tbody>
@@ -195,6 +197,7 @@
                         <th>Faculty</th>
                         <th>
                             <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
+                            <a href="{{route('mail.index')}}" class="btn btn-primary">point < 5</a>
                         </th>
                         </thead>
                         <tbody>

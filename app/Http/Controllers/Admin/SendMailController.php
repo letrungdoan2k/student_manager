@@ -17,12 +17,13 @@ class SendMailController extends Controller
 
     public function index()
     {
-        return view('admin.mail.index');
+        $students = $this->studentRepository->average_score();
+        return view('admin.students.studentMail', compact('students'));
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $this->studentRepository->sendMail($request->all());
-        return redirect(route('mail.index'));
+        $this->studentRepository->sendMail(10);
+        return redirect(route('mail.index'))->with('success', 'Email sent successfully');
     }
 }

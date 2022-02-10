@@ -6,7 +6,6 @@ use App\Jobs\SendEmail;
 use App\Mail\SendMail;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class StudentRepository extends BaseRepository implements StudentRepositoryInterface
@@ -169,22 +168,20 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         return $student;
     }
 
-    // sendEmail
-    public function sendMail($request)
+    // point < 5
+    public function average_score($pageNumber = 10)
     {
-        if ($request['action'] == 'all') {
-            $students = $this->model->all();
-            foreach ($students as $student) {
-                $data = [
-                    'name' => $student->name,
-                    'email' => $student->email,
-                    'title' => $request['title'],
-                    'content' => $request['content']
-                ];
-                $mail = new SendMail($data);
-                Mail::to($data['email'])->send($mail);
-//                SendEmail::dispatch($data)->delay(Carbon::now()->addSeconds(30));
-            }
+        $students = $this->model->where('status', 1)->where('average_score', '<=', 5)->orderByDesc('updated_at')->paginate($pageNumber);
+        return $students;
+    }
+
+    // sendEmail
+    public function sendMail($pageNumber = 10)
+    {
+        $students = $this->model->where('status', 1)->where('average_score', '<=', 5)->orderByDesc('updated_at')->paginate($pageNumber);
+        foreach ($students as $student) {
+            $data = new SendMail($student);
+            SendEmail::dispatch($data);
         }
         return true;
     }

@@ -1,5 +1,3 @@
-{{--Hi, <b>{{$data['name']}}</b>--}}
-{{--<p>--}}
-{{--    {{$data['content']}}--}}
-{{--</p>--}}
-<h1>aaaaaaaaaaaa</h1>
+Hi, <b>{{$student->name}}</b>
+<br>
+<p><b>{{$student->name}}</b> bạn đã bị đuổi do điểm quá kém</p>

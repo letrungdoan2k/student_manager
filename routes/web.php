@@ -21,8 +21,8 @@ Route::prefix('admin')->middleware('isLogin')->group(function () {
         Route::resource('students', 'StudentController');
         Route::resource('subjects', 'SubjectController');
 
-        Route::get('send-mail', 'SendMailController@index')->name('mail.index');
-        Route::post('send-mail', 'SendMailController@store')->name('mail.store');
+        Route::get('aversge-score<5', 'SendMailController@index')->name('mail.index');
+        Route::get('send-mail', 'SendMailController@store')->name('mail.store');
     });
 });
 Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {

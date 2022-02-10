@@ -2,9 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Student;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -12,16 +10,16 @@ class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $data;
+    private $student;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($student)
     {
-        $this->data = $data;
+        $this->student = $student;
     }
 
     /**
@@ -32,10 +30,10 @@ class SendMail extends Mailable
     public function build()
     {
         return $this
-            ->subject($this->data['title'])
+            ->subject('Bạn đã bị đuổi học!')
             ->view('admin.mail.content')
             ->with([
-                'data' => $this->data,
+                'student' => $this->student,
             ]);
     }
 }

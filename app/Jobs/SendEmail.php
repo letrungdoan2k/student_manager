@@ -23,7 +23,6 @@ class SendEmail implements ShouldQueue
     public function __construct($data)
     {
         $this->data = $data;
-        $this->queue = 'email';
     }
 
     /**
@@ -33,10 +32,7 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
-        Mail::send('admin.mail.content', $this->data, function ($message){
-            $message->to($this->data['email'])
-                ->from('letrungdoan2@gmail.com','Student Project')
-                ->setSubject($this->data['title']);
-        });
+        Mail::to('letrungdoan2@gmail.com')
+            ->send($this->data);
     }
 }
