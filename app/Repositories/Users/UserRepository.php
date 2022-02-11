@@ -11,7 +11,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return \App\Models\User::class;
     }
 
-    function createUser($getInfo,$social){
+    public function createUser($getInfo,$social){
         $user = $this->model->where('provider_id', $getInfo->id)->first();
         if (!$user) {
             $user = $this->model->create([
