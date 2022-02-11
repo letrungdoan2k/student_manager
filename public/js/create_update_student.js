@@ -6,7 +6,10 @@ let data = [];
 // lấy danh sách tất cả môn học
 $.ajax({
     type: "GET",
-    header: 'Access-Control-Allow-Origin',
+    crossDomain: true,
+    xhrFields: {
+        withCredentials: true,
+    },
     url: api + "/subjects/",
     success: function (res) {
         Object.values(res).forEach((value) => {
