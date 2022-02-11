@@ -1,4 +1,4 @@
-const api = "http://127.0.0.1:8000/api";
+const api = "https://pure-headland-57673.herokuapp.com/api";
 
 // create and update student_subject
 var arraySubject = [];
