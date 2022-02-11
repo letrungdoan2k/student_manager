@@ -1,4 +1,4 @@
-const api = "https://pure-headland-57673.herokuapp.com/api";
+const api = "https://pure-headland-57673.herokuapp.com/https://example.com/api";
 
 // create and update student_subject
 var arraySubject = [];
