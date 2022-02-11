@@ -36,4 +36,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
         Auth::logout();
         return redirect(route('login'));
     })->name('logout');
+
+    Route::get('check-login/social/{social}', 'SocialController@redirectToProvider')->name('social.login');
+//    Route::get('login/social/{social}', 'SocialController@handleProviderCallback');
 });

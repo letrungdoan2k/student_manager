@@ -47,7 +47,7 @@
                     <div class="social-login">
                         <span class="social-label">Or login with</span>
                         <ul class="socials">
-                            <li><a href="{{ asset('auth') }}/#"><i
+                            <li><a href="{{route('social.login', ['social' => 'facebook'])}}"><i
                                         class="display-flex-center zmdi zmdi-facebook"></i></a></li>
                             <li><a href="{{ asset('auth') }}/#"><i
                                         class="display-flex-center zmdi zmdi-twitter"></i></a></li>
