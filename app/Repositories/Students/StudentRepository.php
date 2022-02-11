@@ -186,4 +186,18 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         return true;
     }
 
+    //
+    public function loginSocial($getInfo, $user)
+    {
+        $student = $this->model->where('user_id', $user->id)->first();
+        if (!$student) {
+            $this->model->create([
+                'name'     => $getInfo->name,
+                'email'    => $getInfo->email,
+                'user_id' => $user->id,
+            ]);
+        }
+        return true;
+    }
+
 }

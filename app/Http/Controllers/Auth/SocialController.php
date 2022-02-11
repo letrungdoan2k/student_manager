@@ -28,12 +28,8 @@ class SocialController extends Controller
     {
         $getInfo = Socialite::driver($social)->user();
         $user = $this->userRepository->createUser($getInfo,$social);
-        $this->studentRepository->create([
-            'name'     => $getInfo->name,
-            'email'    => $getInfo->email,
-            'user_id' => $user->id,
-        ]);
+        $this->studentRepository->loginSocial($getInfo, $user);
         auth()->login($user);
-        return redirect()->to('/');
+        return redirect()->route('dashboard');
     }
 }
