@@ -1,4 +1,4 @@
-const api = "https://pure-headland-57673.herokuapp.com/api";
+const api = "http://127.0.0.1:8000/api";
 
 // create and update student_subject
 var arraySubject = [];
@@ -6,6 +6,7 @@ let data = [];
 // lấy danh sách tất cả môn học
 $.ajax({
     type: "GET",
+    header: 'Access-Control-Allow-Origin',
     url: api + "/subjects/",
     success: function (res) {
         Object.values(res).forEach((value) => {
