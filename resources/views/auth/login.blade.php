@@ -51,7 +51,7 @@
                                         class="display-flex-center zmdi zmdi-facebook"></i></a></li>
                             <li><a href="{{ asset('auth') }}/#"><i
                                         class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                            <li><a href="{{ asset('auth') }}/#"><i class="display-flex-center zmdi zmdi-google"></i></a>
+                            <li><a href="{{route('social.login', ['social' => 'google'])}}"><i class="display-flex-center zmdi zmdi-google"></i></a>
                             </li>
                         </ul>
                     </div>
