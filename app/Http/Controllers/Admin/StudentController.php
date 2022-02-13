@@ -126,11 +126,25 @@ class StudentController extends Controller
     }
 
     //API function
-
+    //list subject
     public function listSubject()
     {
         $subjects = $this->subjectRepository->getAll();
         return response()->json($subjects);
+    }
+
+    //profile student
+    public function profile($id)
+    {
+        $student = $this->studentRepository->findOrFail($id);
+        return response()->json($student);
+    }
+
+    //profile update
+    public function profileUpdate(Request $request, $id)
+    {
+        $student = $this->studentRepository->update($id, $request->all());
+        return response()->json($student);
     }
 
 }

@@ -15,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(["namespace" => "App\Http\Controllers\Admin"], function () {
-        Route::get("/subjects", "StudentController@listSubject");
+    Route::get("/subjects", "StudentController@listSubject");
+    Route::get("/profile/{id}", "StudentController@profile");
+    Route::put("/profile/{id}", "StudentController@profileUpdate");
 });

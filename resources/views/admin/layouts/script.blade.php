@@ -29,4 +29,7 @@
 <script src="{{ asset('adminlte') }}/dist/js/adminlte.js"></script>
 
 <script src="{{ asset('js') }}/create_update_student.js"></script>
+
+<script src="{{ asset('js') }}/update_information.js"></script>
+
 <!-- AdminLTE for demo purposes -->
