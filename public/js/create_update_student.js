@@ -1,20 +1,27 @@
-const api = "http://127.0.0.1:8000/api";
+const api = "https://pure-headland-57673.herokuapp.com/https://example.com/api";
 
 // create and update student_subject
 var arraySubject = [];
 let data = [];
 // lấy danh sách tất cả môn học
-$.ajax({
-    type: "GET",
-    url: api + "/subjects/",
-    success: function (res) {
-        Object.values(res).forEach((value) => {
-            arraySubject.push(value);
-        });
-    },
-    error: function (err) {
-    },
+axios.get(api + "/subjects/").then(resp => {
+    // console.log(resp.data)
+    Object.values(resp.data).forEach((value) => {
+        arraySubject.push(value);
+    });
 });
+// $.ajax({
+//     type: "GET",
+//     url: api + "/subjects/",
+//     success: function (res) {
+//         console.log(res)
+//         Object.values(res).forEach((value) => {
+//             arraySubject.push(value);
+//         });
+//     },
+//     error: function (err) {
+//     },
+// });
 
 //lấy môn đã Chọn
 function filterSubject() {
