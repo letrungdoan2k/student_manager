@@ -21,6 +21,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
                 'provider_id' => $getInfo->id
             ]);
         }
+        if (!$user && $social === 'twitter') {
+            $user = $this->model->create([
+                'name'     => $getInfo->name,
+                'email'    => $getInfo->email,
+                'provider' => $social,
+                'provider_id' => $getInfo->id
+            ]);
+        }
         if (!$user && $social === 'google') {
             $user = $this->model->create([
                 'name'     => $getInfo->getName(),

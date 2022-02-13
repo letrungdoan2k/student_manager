@@ -25,7 +25,8 @@ class SocialController extends Controller
 
     public function handleProviderCallback($social)
     {
-        if ($social === 'facebook') {
+        dd($social);
+        if ($social === 'facebook' || $social === 'twitter') {
             $getInfo = Socialite::driver($social)->user();
         }
         if ($social === 'google') {
