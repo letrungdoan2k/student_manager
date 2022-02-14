@@ -187,10 +187,15 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
     }
 
     //
-    public function loginSocial($getInfo, $user)
+    public function loginSocial($getInfo, $user, $social)
     {
         $student = $this->model->where('user_id', $user->id)->first();
-        if (!$student) {
+        if (!$student && $social == 'twitter') {
+            $this->model->create([
+                'name'     => $getInfo->name,
+                'user_id' => $user->id,
+            ]);
+        }else {
             $this->model->create([
                 'name'     => $getInfo->name,
                 'email'    => $getInfo->email,

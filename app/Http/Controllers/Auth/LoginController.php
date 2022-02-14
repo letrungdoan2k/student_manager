@@ -17,7 +17,7 @@ class LoginController extends Controller
         $email = $request->email;
         $password = $request->password;
         if(Auth::attempt(['email' => $email, 'password' => $password], $request->remember)){
-            return redirect(route('students.show', ['student' => Auth::user()->id]));
+            return redirect()->route('students.show', ['student' => Auth::user()->id]);
         }
         return back()->with([
             'msg' => 'Incorrect account/password',

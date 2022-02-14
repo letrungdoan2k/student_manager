@@ -24,7 +24,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         if (!$user && $social === 'twitter') {
             $user = $this->model->create([
                 'name'     => $getInfo->name,
-                'email'    => $getInfo->email,
                 'provider' => $social,
                 'provider_id' => $getInfo->id
             ]);

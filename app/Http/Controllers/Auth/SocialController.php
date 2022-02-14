@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Repositories\Students\StudentRepositoryInterface;
 use App\Repositories\Users\UserRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialController extends Controller
@@ -31,10 +32,9 @@ class SocialController extends Controller
         if ($social === 'google') {
             $getInfo = Socialite::driver($social)->with(['access_type' => 'offline'])->stateless()->user();
         }
-        dd($getInfo);
         $user = $this->userRepository->createUser($getInfo, $social);
-        $this->studentRepository->loginSocial($getInfo, $user);
+        $this->studentRepository->loginSocial($getInfo, $user, $social);
         auth()->login($user);
-        return redirect()->route('dashboard');
+        return redirect()->route('students.show', ['student' => Auth::user()->id]);
     }
 }
