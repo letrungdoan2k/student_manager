@@ -111,6 +111,7 @@ return [
     'socialite' => [
         'drivers' => [
             'google',
+            'twitter',
         ],
     ],
 

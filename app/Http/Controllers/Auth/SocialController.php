@@ -31,6 +31,7 @@ class SocialController extends Controller
         if ($social === 'google') {
             $getInfo = Socialite::driver($social)->with(['access_type' => 'offline'])->stateless()->user();
         }
+        dd($getInfo);
         $user = $this->userRepository->createUser($getInfo, $social);
         $this->studentRepository->loginSocial($getInfo, $user);
         auth()->login($user);
