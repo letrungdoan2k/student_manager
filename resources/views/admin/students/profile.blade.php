@@ -19,15 +19,10 @@
                     <h5>{{ $student->name }}</h5>
                     <p>Student</p>
                 </div>
+                    <input type="hidden" id="profileId" value="{{ $student->id }}">
                 <div class="p-2 mt-3">
-                    <p class="d-flex">
-                        <b style="line-height: 38px">email: </b>
-                        <input type="text" name="profileEmail" value="{{ $student->email }}" disabled class="form-control" style="border: none; background-color: #f8f9fa">
-                    </p>
-                    <p class="d-flex">
-                        <b style="line-height: 38px;">Phone: </b>
-                        <input type="text" name="profilePhone" value="{{ $student->phone }}" disabled class="form-control" style="border: none; background-color: #f8f9fa">
-                    </p>
+                    <p><b>email: </b><span id="profileEmail">{{ $student->email }}</span></p>
+                    <p><b>Phone: </b><span id="profilePhone">{{ $student->phone }}</span></p>
                     <p>
                         <b>Status: </b>
                         @if($student->status == 0)
@@ -41,6 +36,9 @@
                 <div class="col-auto mt-3">
                     <button class="btn btn-primary" onclick="profileStudent({{$student->id}})">
                         Profile-update
+                    </button>
+                    <button class="btn btn-warning" onclick="registerSubject({{$student->id}})">
+                        Register subject
                     </button>
                 </div>
             </div>
@@ -69,9 +67,15 @@
                                             <label
                                                 class="col-xl-3 col-lg-3 col-form-label">Gender</label>
                                             <div class="col-lg-9 col-xl-6">
-                                                <input type="text" name="gender"
-                                                       value="{{ $student->gender == 0 ? 'Male' : 'Female' }}"
-                                                       disabled class="form-control"></div>
+                                                @if(isset($student->gender))
+                                                    <input type="text" name="gender"
+                                                           value="{{ $student->gender == 0 ? 'Male' : 'Female' }}"
+                                                           disabled class="form-control">
+                                                @else
+                                                    <input type="text" name="gender"
+                                                           disabled class="form-control">
+                                                @endif
+                                            </div>
                                         </div>
                                         <div class="form-group row">
                                             <label

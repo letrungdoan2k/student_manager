@@ -99,4 +99,10 @@ class SubjectController extends Controller
         $this->subjectRepository->delete($id);
         return redirect(route('subjects.index'))->with('success', 'Delete subject successfully');
     }
+
+    public function studentSubject($id) {
+       $subjects = $this->subjectRepository->isSubjectCount($id);
+       return response()->json($subjects);
+    }
+
 }

@@ -15,4 +15,16 @@ class SubjectRepository extends BaseRepository implements SubjectRepositoryInter
     public function count() {
         return $this->model->count();
     }
+
+    public function isSubjectCount($id) {
+        $subjects = $this->model->whereHas('students', function ($query) use ($id) {
+            $query->where('student_id', $id);
+        })->get();
+        $array = [];
+        foreach ($subjects as $subject){
+            $array[] = $subject->id;
+        }
+        $isSubject = $this->model->whereNotIn('id', $array)->get();
+        return $isSubject;
+    }
 }

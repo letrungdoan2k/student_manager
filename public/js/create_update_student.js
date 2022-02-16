@@ -1,5 +1,5 @@
 const api = "http://127.0.0.1:8000/api";
-
+const url = "http://127.0.0.1:8000";
 // create and update student_subject
 var arraySubject = [];
 let data = [];
@@ -9,18 +9,6 @@ axios.get(api + "/subjects/").then(resp => {
         arraySubject.push(value);
     });
 });
-// $.ajax({
-//     type: "GET",
-//     url: api + "/subjects/",
-//     success: function (res) {
-//         console.log(res)
-//         Object.values(res).forEach((value) => {
-//             arraySubject.push(value);
-//         });
-//     },
-//     error: function (err) {
-//     },
-// });
 
 //lấy môn đã Chọn
 function filterSubject() {
@@ -34,7 +22,6 @@ function filterSubject() {
     return data;
 }
 
-var input
 setTimeout(filterSubject, 500)
 
 function changeSubject(id) {
@@ -94,7 +81,29 @@ $(document).ready(function () {
 function onRemove(el) {
     $(el).parent().parent().remove();
     changeSubject()
+    onChangeSubject()
 }
 
-//
+//confirm delete
+
+function showConfirmDelete(id,content) {
+    $("#exampleModal").modal("show");
+    $("#modal-body-confirm-delete").text(`You want to delete ${content}`);
+    $("#idStudentHidden").val(id);
+
+}
+
+function hideConfirmDelete() {
+    $("#exampleModal").modal("hide");
+}
+
+function onDelete(id) {
+    const name = $(`#studentName${id}`).text();
+    showConfirmDelete(id, name)
+}
+
+function onSubmitDelete() {
+   const id = $("#idStudentHidden").val();
+    $(`#deleteStudent${id}`).submit();
+}
 

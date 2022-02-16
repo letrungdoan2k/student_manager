@@ -30,6 +30,10 @@
 
 <script src="{{ asset('js') }}/create_update_student.js"></script>
 
+<script src="{{ asset('adminlte') }}/toast/js/bs4-toast.js"></script>
+
+<script src="{{ asset('js') }}/form-validate.min.js"></script>
+
 <script src="{{ asset('js') }}/update_information.js"></script>
 
 <!-- AdminLTE for demo purposes -->

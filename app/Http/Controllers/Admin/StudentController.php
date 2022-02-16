@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Students\StudentRequest;
-use App\Http\Requests\Students\StudentSearchRequest;
 use App\Repositories\Faculties\FacultyRepositoryInterface;
 use App\Repositories\Students\StudentRepositoryInterface;
 use App\Repositories\Subjects\SubjectRepositoryInterface;
 use App\Repositories\Users\UserRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -106,11 +106,14 @@ class StudentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StudentRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $countSubject = $this->subjectRepository->count();
-        $this->studentRepository->updateStudent($id, $request->all(), $countSubject);
-        return redirect(route('students.index'))->with('success', 'Student update successfully');
+        $student = $this->studentRepository->updateStudent($id, $request->all(), $countSubject);
+        if (Auth::user()->id == $student->user_id){
+            return redirect()->route('logout');
+        }
+        return redirect()->route('students.index')->with('success', 'Student update successfully');
     }
 
     /**
@@ -145,6 +148,12 @@ class StudentController extends Controller
     {
         $student = $this->studentRepository->update($id, $request->all());
         return response()->json($student);
+    }
+
+    //
+    public function profileUpdateImage(Request $request, $id)
+    {
+        return response()->json($request->all());
     }
 
 }

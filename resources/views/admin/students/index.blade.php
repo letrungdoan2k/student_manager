@@ -1,4 +1,10 @@
 @extends('admin.layouts.main')
+@section('link')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="#">Student</a></li>
+        <li class="breadcrumb-item active">List student</li>
+    </ol>
+@endsection
 @section('content')
     {!! Form::open(['method' => 'GET', 'route' => 'students.index']) !!}
     <div class="form-group d-flex">
@@ -81,14 +87,14 @@
                         <th>Faculty</th>
                         <th>
                             <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
-                            <a href="{{route('mail.index')}}" class="btn btn-primary">point < 5</a>
+                            <a href="{{route('mail.index')}}" class="btn btn-primary"><i class="fas fa-mail-bulk"></i></a>
                         </th>
                         </thead>
                         <tbody>
                         @foreach ($studentAll as $student)
                             <tr>
                                 <td>{{($studentAll->currentPage() - 1) * $studentAll->perPage() + $loop->iteration}}</td>
-                                <td>{{$student->name}}</td>
+                                <td id="studentName{{$student->id}}">{{$student->name}}</td>
                                 <td>{{$student->birthday}}</td>
                                 <td>{{$student->address}}</td>
                                 <td>{{$student->phone}}</td>
@@ -103,12 +109,16 @@
                                     <td></td>
                                 @endif
                                 <td class="d-flex">
-                                    <a href="{{route('students.show', ['student' => $student->id])}}"
+                                    <a href="{{route('students.show', ['student' => $student->user_id])}}"
                                        class="btn btn-info"><i class="bi bi-info-lg"></i></a>
                                     <a href="{{route('students.edit', ['student' => $student->id])}}"
-                                       class="btn btn-info ml-1"><i class="bi bi-pencil-square"></i></a>
-                                    {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id]]) !!}
-                                    <button type="submit" class="bi bi-trash btn btn-danger ml-1"></button>
+                                       class="btn btn-warning ml-1"><i class="bi bi-pencil-square"></i></a>
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id], 'id' => 'deleteStudent' . $student->id]) !!}
+                                    @if(Auth::user()->id == $student->user_id)
+                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1" disabled></button>
+                                    @else
+                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1"></button>
+                                    @endif
                                     {!! Form::close() !!}
                                 </td>
                             </tr>
@@ -139,14 +149,14 @@
                         <th>Faculty</th>
                         <th>
                             <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
-                            <a href="{{route('mail.index')}}" class="btn btn-primary">point < 5</a>
+                            <a href="{{route('mail.index')}}" class="btn btn-primary"><i class="fas fa-mail-bulk"></i></a>
                         </th>
                         </thead>
                         <tbody>
                         @foreach ($studentUnfinised as $student)
                             <tr>
                                 <td>{{($studentUnfinised->currentPage() - 1) * $studentUnfinised->perPage() + $loop->iteration}}</td>
-                                <td>{{$student->name}}</td>
+                                <td id="studentName{{$student->id}}">{{$student->name}}</td>
                                 <td>{{$student->birthday}}</td>
                                 <td>{{$student->address}}</td>
                                 <td>{{$student->phone}}</td>
@@ -165,8 +175,12 @@
                                        class="btn btn-info"><i class="bi bi-info-lg"></i></a>
                                     <a href="{{route('students.edit', ['student' => $student->id])}}"
                                        class="btn btn-info ml-1"><i class="bi bi-pencil-square"></i></a>
-                                    {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id]]) !!}
-                                    <button type="submit" class="bi bi-trash btn btn-danger ml-1"></button>
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id], 'id' => 'deleteStudent' . $student->id]) !!}
+                                    @if(Auth::user()->id == $student->user_id)
+                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1" disabled></button>
+                                    @else
+                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1"></button>
+                                    @endif
                                     {!! Form::close() !!}
                                 </td>
                             </tr>
@@ -197,14 +211,14 @@
                         <th>Faculty</th>
                         <th>
                             <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
-                            <a href="{{route('mail.index')}}" class="btn btn-primary">point < 5</a>
+                            <a href="{{route('mail.index')}}" class="btn btn-primary"><i class="fas fa-mail-bulk"></i></a>
                         </th>
                         </thead>
                         <tbody>
                         @foreach ($studentDone as $student)
                             <tr>
                                 <td>{{($studentDone->currentPage() - 1) * $studentDone->perPage() + $loop->iteration}}</td>
-                                <td>{{$student->name}}</td>
+                                <td id="studentName{{$student->id}}">{{$student->name}}</td>
                                 <td>{{$student->birthday}}</td>
                                 <td>{{$student->address}}</td>
                                 <td>{{$student->phone}}</td>
@@ -223,8 +237,12 @@
                                        class="btn btn-info"><i class="bi bi-info-lg"></i></a>
                                     <a href="{{route('students.edit', ['student' => $student->id])}}"
                                        class="btn btn-info ml-1"><i class="bi bi-pencil-square"></i></a>
-                                    {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id]]) !!}
-                                    <button type="submit" class="bi bi-trash btn btn-danger ml-1"></button>
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id], 'id' => 'deleteStudent' . $student->id]) !!}
+                                    @if(Auth::user()->id == $student->user_id)
+                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1" disabled></button>
+                                    @else
+                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1"></button>
+                                    @endif
                                     {!! Form::close() !!}
                                 </td>
                             </tr>

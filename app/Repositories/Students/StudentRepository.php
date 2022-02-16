@@ -6,6 +6,7 @@ use App\Jobs\SendEmail;
 use App\Mail\SendMail;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class StudentRepository extends BaseRepository implements StudentRepositoryInterface
@@ -103,8 +104,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $stt = 0;
         $attributes['status'] = 0;
         $countPoint = 0;
-        $averagePoint = 0;
-        if (isset($attributes['subjects'])) {
+        if (isset($attributes['subjects']) && !isset($attributes['register'])) {
             foreach ($attributes['subject_id'] as $subject) {
                 $stt++;
                 $countPoint += $subject['point'];
@@ -113,14 +113,19 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
             if (count($attributes['subjects']) == $countSubject) {
                 $attributes['status'] = 1;
             }
+            $attributes['average_score'] = $averagePoint;
         }
-        $attributes['average_score'] = $averagePoint;
         $result->update($attributes);
         $points = [];
         if (isset($attributes['subject_id'])) {
             $points = $attributes['subject_id'];
         }
-        $result->subjects()->sync($points);
+        if (isset($attributes['register'])) {
+            $result->subjects()->attach($points);
+        } else {
+            $result->subjects()->sync($points);
+        }
+        return $result;
     }
 
     //delete
@@ -168,6 +173,14 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         return $student;
     }
 
+    public function updateImage($image)
+    {
+        $imgPath = $image['image']->store('public/images');
+        $imgPath = str_replace('public/', '', $imgPath);
+        $attributes['image'] = $imgPath;
+    }
+
+
     // point < 5
     public function average_score($pageNumber = 10)
     {
@@ -192,17 +205,19 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $student = $this->model->where('user_id', $user->id)->first();
         if (!$student && $social == 'twitter') {
             $this->model->create([
-                'name'     => $getInfo->name,
+                'name' => $getInfo->name,
                 'user_id' => $user->id,
             ]);
-        }else {
+        } elseif (!$student && ($social == 'google' || $social == 'facebook')) {
             $this->model->create([
-                'name'     => $getInfo->name,
-                'email'    => $getInfo->email,
+                'name' => $getInfo->name,
+                'email' => $getInfo->email,
                 'user_id' => $user->id,
             ]);
         }
         return true;
     }
+
+    //
 
 }

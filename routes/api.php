@@ -18,4 +18,7 @@ Route::group(["namespace" => "App\Http\Controllers\Admin"], function () {
     Route::get("/subjects", "StudentController@listSubject");
     Route::get("/profile/{id}", "StudentController@profile");
     Route::put("/profile/{id}", "StudentController@profileUpdate");
+    Route::post("/profile/image/{id}", "StudentController@profileUpdateImage");
+    Route::get("/subjects/{id}", "SubjectController@studentSubject");
+    Route::put("/student/{id}", "StudentController@update");
 });

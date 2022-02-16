@@ -19,6 +19,8 @@ Route::prefix('admin')->middleware('isLogin')->group(function () {
         Route::get('/', 'DashboardController@index')->name('dashboard');
         Route::resource('faculties', 'FacultyController');
         Route::resource('students', 'StudentController');
+        Route::get('student/remove/{id}', 'SubjectController@destroy')->name('student.remove');
+
         Route::resource('subjects', 'SubjectController');
 
         Route::get('aversge-score<5', 'SendMailController@index')->name('mail.index');
