@@ -104,7 +104,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $stt = 0;
         $attributes['status'] = 0;
         $countPoint = 0;
-        if (isset($attributes['subjects']) && !isset($attributes['register'])) {
+        if (isset($attributes['subjects'])) {
             foreach ($attributes['subject_id'] as $subject) {
                 $stt++;
                 $countPoint += $subject['point'];
@@ -132,9 +132,11 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
     public function deleteStudent($id)
     {
         $result = $this->findOrFail($id);
+        $user_id = $this->findOrFail($id)->user_id;
         $image = str_replace('images/', '', $result->image);
         Storage::delete($image);
-        return $result->delete();
+        $result->delete();
+        return $user_id;
     }
 
     //gender array

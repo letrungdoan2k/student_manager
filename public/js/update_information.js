@@ -9,8 +9,8 @@ function hideModal() {
     $("#myModal").modal("hide");
 }
 
-function toast() {
-    bs4Toast.primary("Primary Toast", "This is Primary toast example.");
+function toast(content) {
+    bs4Toast.primary("Successfully", content);
 }
 
 async function profileStudent(id) {
@@ -82,7 +82,7 @@ $().ready(function () {
             //     }
             // })
             hideModal();
-            toast();
+            toast('Profile update successfully');
         },
     });
 });

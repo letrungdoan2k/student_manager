@@ -124,7 +124,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $this->studentRepository->deleteStudent($id);
+        $user_id = $this->studentRepository->deleteStudent($id);
+        $this->userRepository->delete($user_id);
         return redirect(route('students.index'))->with('success', 'Delete student successfully');
     }
 

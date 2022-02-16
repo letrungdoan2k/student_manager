@@ -25,17 +25,6 @@
                    class="d-block">{{Auth::user()->name}}</a>
             </div>
         </div>
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -44,18 +33,9 @@
                      with font-awesome or any other icon font library -->
                 <li class="nav-item ">
                     {{-- <li class="nav-item menu-open"> --}}
-                    <a href="{{route('dashboard')}}" class="nav-link ">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Dashboard
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    {{-- <li class="nav-item menu-open"> --}}
                     <a href="{{route('students.index')}}" class="nav-link ">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
+                        <i class="bi bi-people-fill" style="font-size: 22px;"></i>
+                        <p class="ml-2">
                             Student
                         </p>
                     </a>
@@ -63,8 +43,8 @@
                 <li class="nav-item ">
                     {{-- <li class="nav-item menu-open"> --}}
                     <a href="{{route('faculties.index')}}" class="nav-link ">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
+                        <i class="bi bi-journal-bookmark-fill" style="font-size: 22px;"></i>
+                        <p class="ml-2">
                             Faculty
                         </p>
                     </a>
@@ -72,8 +52,8 @@
                 <li class="nav-item ">
                     {{-- <li class="nav-item menu-open"> --}}
                     <a href="{{route('subjects.index')}}" class="nav-link ">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
+                        <i class="bi bi-book-fill" style="font-size: 22px;"></i>
+                        <p class="ml-2">
                             Subject
                         </p>
                     </a>
