@@ -20,4 +20,10 @@ Route::group(["namespace" => "App\Http\Controllers\Admin"], function () {
     Route::put("/profile/{id}", "StudentController@profileUpdate");
     Route::get("/subjects/{id}", "SubjectController@studentSubject");
     Route::post("/profile/image/{id}", "StudentController@profileUpdateImage");
+
+    //
+    Route::get("/faculties", "FacultyController@apiIndex");
+    Route::get("/faculty/{id}/remove", "FacultyController@apiRemove");
+    Route::post("/faculties", "FacultyController@apiStore");
+    Route::put("/faculty/{id}/edit", "FacultyController@apiUpdate");
 });

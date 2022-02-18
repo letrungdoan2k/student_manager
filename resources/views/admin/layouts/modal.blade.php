@@ -73,12 +73,13 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <input type="hidden" id="idStudentHidden">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete student</h5>
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button type="button" class="close" onclick="hideConfirmDelete()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -86,9 +87,8 @@
             <div class="modal-body" id="modal-body-confirm-delete">
 
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="hideConfirmDelete()">Close</button>
-                <button type="button" onclick="onSubmitDelete()" class="btn btn-primary">Delete</button>
+            <div class="modal-footer" id="button-delete-submit">
+
             </div>
         </div>
     </div>
@@ -99,28 +99,28 @@
     <div class="modal-dialog">
         <div class="modal-content">
             {!! Form::open(['method' => 'PUT', 'class' => 'subject-form-update']) !!}
-                <input type="hidden" name="register" value="register">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Register Subject</h5>
-                    <button type="button" class="close" onclick="hideModalSubject()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="modal-subject">
-                    <div class="form-row">
-                        <div class="form-group col-md-8">
-                            Subject:
-                        </div>
-                        <div class="form-group col-md-3">
-                            <button type="button" class="btn btn-primary btn-submit" id="addSubjectModal">Add</button>
-                        </div>
+            <input type="hidden" name="register" value="register">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Register Subject</h5>
+                <button type="button" class="close" onclick="hideModalSubject()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-subject">
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        Subject:
                     </div>
+                    <div class="form-group col-md-3">
+                        <button type="button" class="btn btn-primary btn-submit" id="addSubjectModal">Add</button>
+                    </div>
+                </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="hideModalSubject()">Close</button>
-                    <button type="submit" class="btn btn-primary btn-submit">Save</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="hideModalSubject()">Close</button>
+                <button type="submit" class="btn btn-primary btn-submit">Save</button>
+            </div>
             {!! Form::close() !!}
         </div>
     </div>
@@ -155,6 +155,32 @@
                 <button type="submit" class="btn btn-primary btn-submit">Save</button>
             </div>
             {!! Form::close() !!}
+        </div>
+    </div>
+</div>
+<div id="myModalFaculty" class="modal fade bd-example-modal-lg">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="create-update-form-update">
+                <input type="hidden" id="updateIdFaculty">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalFacultyTitle"></h5>
+                    <button type="button" class="close" onclick="hideModalFaculty()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal-subject">
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label>Name:</label>
+                            <input type="text" name="name" class="form-control facultyName" placeholder="Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bottom-faculty">
+
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -103,4 +103,30 @@ class FacultyController extends Controller
         $this->facultyRepository->delete($id);
         return redirect(route('faculties.index'))->with('success', 'Delete faculty successfully');
     }
+
+    //----------------------------API----------------------------------
+
+    public function apiIndex()
+    {
+        $faculties = $this->facultyRepository->getAll();
+        return response()->json($faculties);
+    }
+
+    public function apiRemove($id)
+    {
+        $this->facultyRepository->delete($id);
+        return true;
+    }
+
+    public function apiStore(Request $request)
+    {
+        $this->facultyRepository->create($request->all());
+        return true;
+    }
+
+    public function apiUpdate(Request $request, $id)
+    {
+        $this->facultyRepository->update($id, $request->all());
+        return true;
+    }
 }

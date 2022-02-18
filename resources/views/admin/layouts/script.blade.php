@@ -36,4 +36,6 @@
 
 <script src="{{ asset('js') }}/update_information.js"></script>
 
+<script src="{{ asset('js') }}/faculties_api.js"></script>
+
 <!-- AdminLTE for demo purposes -->

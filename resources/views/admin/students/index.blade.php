@@ -106,7 +106,7 @@
                         @foreach ($studentAll as $student)
                             <tr>
                                 <td>{{($studentAll->currentPage() - 1) * $studentAll->perPage() + $loop->iteration}}</td>
-                                <td id="studentName{{$student->id}}">{{$student->name}}</td>
+                                <td id="name{{$student->id}}">{{$student->name}}</td>
                                 <td>{{$student->birthday}}</td>
                                 <td>{{$student->address}}</td>
                                 <td>{{$student->phone}}</td>
@@ -149,10 +149,10 @@
                                     @endif
                                     {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id], 'id' => 'deleteStudent' . $student->id]) !!}
                                     @if(Auth::user()->id != $student->user_id && Auth::user()->hasrole('admin'))
-                                        <button type="button" onclick="onDelete({{$student->id}})"
+                                        <button type="button" onclick="onDelete({{$student->id}},'student')"
                                                 class="bi bi-trash btn btn-danger ml-1"></button>
                                     @else
-                                        <button type="button" onclick="onDelete({{$student->id}})"
+                                        <button type="button" onclick="onDelete({{$student->id}},'student')"
                                                 class="bi bi-trash btn btn-danger ml-1" disabled></button>
                                     @endif
                                     {!! Form::close() !!}

@@ -13,6 +13,10 @@ function toast(content) {
     bs4Toast.primary("Successfully", content);
 }
 
+function dangerT(content){
+    bs4Toast.error('Delete', content);
+}
+
 async function profileStudent(id) {
     try {
         const {data} = await axios.get(api + `/profile/${id}`);

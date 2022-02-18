@@ -86,24 +86,35 @@ function onRemove(el) {
 
 //confirm delete
 
-function showConfirmDelete(id,content) {
+function showConfirmDelete(id, content, title) {
     $("#exampleModal").modal("show");
-    $("#modal-body-confirm-delete").text(`You want to delete ${content}`);
+    $("#exampleModalLabel").text(`Delete ${title}`)
+    $("#modal-body-confirm-delete").html(`<p>You want to delete <b>${content}</b></p>`);
     $("#idStudentHidden").val(id);
-
+    $("#button-delete-submit").html(`<button type="button" class="btn btn-secondary" onclick="hideConfirmDelete()">Close</button><button type="button" onclick="onSubmitDelete('${title}')" class="btn btn-primary">Delete</button>`)
 }
 
 function hideConfirmDelete() {
     $("#exampleModal").modal("hide");
 }
 
-function onDelete(id) {
-    const name = $(`#studentName${id}`).text();
-    showConfirmDelete(id, name)
+function onDelete(id, title) {
+    const name = $(`#name${id}`).text();
+    showConfirmDelete(id, name, title)
 }
 
-function onSubmitDelete() {
-   const id = $("#idStudentHidden").val();
-    $(`#deleteStudent${id}`).submit();
+function onSubmitDelete(content) {
+    console.log(content)
+    const id = $("#idStudentHidden").val();
+    if (content === 'student'){
+        $(`#deleteStudent${id}`).submit();
+    }
+    if (content === 'faculty') {
+        axios.get(`${api}/faculty/${id}/remove`)
+        fetchFaculty()
+    }
+    hideConfirmDelete()
+    dangerT(`Delete ${content} successfully`)
 }
+
 
