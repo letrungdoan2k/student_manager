@@ -3,7 +3,8 @@
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form class="profile-form-update" id="profileSubmit">
+            <form class="profile-form-update" id="profileSubmit" enctype="multipart/form-data">
+                @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">Update Profile</h5>
                     <button type="button" class="close" onclick="hideModal()">
@@ -66,9 +67,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="hideModal()">Close</button>
-                    <button type="submit" class="btn btn-primary btn-submit">Save
-                        changes
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-submit">Save</button>
                 </div>
             </form>
         </div>
@@ -100,7 +99,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             {!! Form::open(['method' => 'PUT', 'class' => 'subject-form-update']) !!}
-{{--            <form class="subject-form-update" action="">--}}
                 <input type="hidden" name="register" value="register">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">Register Subject</h5>
@@ -123,6 +121,39 @@
                     <button type="button" class="btn btn-secondary" onclick="hideModalSubject()">Close</button>
                     <button type="submit" class="btn btn-primary btn-submit">Save</button>
                 </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
+</div>
+<div id="myModalPermission" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {!! Form::open(['method' => 'PUT', 'id' => 'formPermission']) !!}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Permission</h5>
+                <button type="button" class="close" onclick="hideModalPermission()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-subject">
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label>Permission:</label>
+                        <select name="permission" ata-rule="required"
+                                class="form-control">
+                            <option value="member">member</option>
+                            <option value="staff">staff</option>
+                            <option value="admin">admin</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="hideModalPermission()">Close</button>
+                <button type="submit" class="btn btn-primary btn-submit">Save</button>
+            </div>
             {!! Form::close() !!}
         </div>
     </div>

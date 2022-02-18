@@ -22,4 +22,8 @@ interface StudentRepositoryInterface extends RepositoryInterface
 
     public function loginSocial($getInfo, $user, $social);
 
+    public function addSubjectStudent($id, $request);
+
+    public function updateImage($id, $request);
+
 }

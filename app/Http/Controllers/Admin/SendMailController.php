@@ -13,6 +13,7 @@ class SendMailController extends Controller
     public function __construct(StudentRepositoryInterface $student)
     {
         $this->studentRepository = $student;
+        $this->middleware(['role:admin']);
     }
 
     public function index()

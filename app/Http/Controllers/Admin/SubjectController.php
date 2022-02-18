@@ -13,6 +13,9 @@ class SubjectController extends Controller
     protected $subjectRepository;
     public function __construct(SubjectRepositoryInterface $subjectRepository) {
         $this->subjectRepository = $subjectRepository;
+
+        $this->middleware(['permission:delete'])->only(['destroy']);
+        $this->middleware(['permission:edit'])->only(['edit', 'update']);
     }
 
     /**

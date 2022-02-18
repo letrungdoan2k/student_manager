@@ -24,6 +24,9 @@ class StudentController extends Controller
         $this->facultyRepository = $facultyRepository;
         $this->subjectRepository = $subjectRepository;
         $this->userRepository = $userRepository;
+
+        $this->middleware(['permission:delete'])->only(['destroy']);
+        $this->middleware(['permission:edit'])->only(['edit', 'update']);
     }
 
     /**
@@ -66,7 +69,7 @@ class StudentController extends Controller
     {
         $request = $request->all();
         $request['password'] = bcrypt($request['password']);
-        $request['user_id'] = $this->userRepository->create($request)->id;
+        $request['user_id'] = $this->userRepository->create($request)->assignRole('member')->id;
         $countSubject = $this->subjectRepository->count();
         $this->studentRepository->createStudent($request, $countSubject);
         return redirect(route('students.index'))->with('success', 'Successfully added student');
@@ -106,7 +109,7 @@ class StudentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StudentRequest $request, $id)
     {
         $countSubject = $this->subjectRepository->count();
         $student = $this->studentRepository->updateStudent($id, $request->all(), $countSubject);
@@ -129,7 +132,7 @@ class StudentController extends Controller
         return redirect(route('students.index'))->with('success', 'Delete student successfully');
     }
 
-    //API function
+    //---------------------------------------API function---------------------------------------------------
     //list subject
     public function listSubject()
     {
@@ -154,7 +157,14 @@ class StudentController extends Controller
     //
     public function profileUpdateImage(Request $request, $id)
     {
-        return response()->json($request->all());
+        $student = $this->studentRepository->updateImage($id, $request->all());
+        return response()->json($student);
+    }
+
+    public function updateSubject(Request $request, $id)
+    {
+        $student = $this->studentRepository->addSubjectStudent($id, $request->all());
+        return view('admin.students.profile', compact('student'));
     }
 
 }

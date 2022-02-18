@@ -19,10 +19,9 @@ Route::prefix('admin')->middleware('isLogin')->group(function () {
         Route::get('/', 'DashboardController@index')->name('dashboard');
         Route::resource('faculties', 'FacultyController');
         Route::resource('students', 'StudentController');
-        Route::get('student/remove/{id}', 'SubjectController@destroy')->name('student.remove');
-
+        Route::put("/student/{id}/subject", "StudentController@updateSubject");
         Route::resource('subjects', 'SubjectController');
-
+        Route::put('user/{id}/permission', 'UserController@permission');
         Route::get('aversge-score<5', 'SendMailController@index')->name('mail.index');
         Route::get('send-mail', 'SendMailController@store')->name('mail.store');
     });

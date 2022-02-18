@@ -15,22 +15,22 @@ function toast(content) {
 
 async function profileStudent(id) {
     try {
-        const response = await axios.get(api + `/profile/${id}`);
-        formProfile.name.value = response.data.name;
-        formProfile.birthday.value = response.data.birthday;
-        formProfile.email.value = response.data.email;
-        formProfile.phone.value = response.data.phone;
-        formProfile.address.value = response.data.address;
-        formProfile.gender.value = response.data.gender;
+        const {data} = await axios.get(api + `/profile/${id}`);
+        formProfile.name.value = data.name;
+        formProfile.birthday.value = data.birthday;
+        formProfile.email.value = data.email;
+        formProfile.phone.value = data.phone;
+        formProfile.address.value = data.address;
+        formProfile.gender.value = data.gender;
         formProfile.id.value = id;
     } catch (error) {
-        console.error(error);
     }
     showModal();
 }
 
-var imagefile = document.querySelector("#updateProfileAvata");
 const profileShow = document.querySelector(".kt-form--label-right");
+const updateImage = document.querySelector("#updateProfileAvata");
+const profileForm = document.querySelector("#profileSubmit");
 $().ready(function () {
     $("#profileSubmit").validate({
         rules: {
@@ -57,14 +57,15 @@ $().ready(function () {
         },
         submitHandler: function (form) {
             const data = {
-                name: form.name.value,
-                birthday: form.birthday.value,
-                email: form.email.value,
-                phone: form.phone.value,
-                address: form.address.value,
-                gender: form.gender.value,
+                name: profileForm.name.value,
+                birthday: profileForm.birthday.value,
+                email: profileForm.email.value,
+                phone: profileForm.phone.value,
+                address: profileForm.address.value,
+                gender: profileForm.gender.value,
             };
             profileShow.name.value = data.name;
+            $("#nameH5").text(data.name);
             profileShow.birthday.value = data.birthday;
             $("#profileEmail").text(data.email);
             $("#profilePhone").text(data.phone);
@@ -72,15 +73,25 @@ $().ready(function () {
             data.gender == 0
                 ? (profileShow.gender.value = "Male")
                 : (profileShow.gender.value = "Female");
-            axios.put(api + `/profile/${form.id.value}`, data);
-
-            // let formData = new FormData()
-            // formData.append("image", imagefile.files[0]);
-            // axios.post(api + `/profile/image/${form.id.value}`, formData, {
-            //     headers: {
-            //         'Content-Type': 'multipart/form-data'
-            //     }
-            // })
+            axios.put(api + `/profile/${profileForm.id.value}`, data);
+            let files = updateImage.files[0]
+            let dataFile = new FormData()
+            dataFile.append("image", files)
+            console.log(profileForm.id.value)
+            $.ajax({
+                type: 'POST',
+                url: api + `/profile/image/${profileForm.id.value}`,
+                data: dataFile,
+                contentType: false,
+                processData: false,
+                success: (response) => {
+                    if (response) {
+                        $(".avataProfile").attr("src", function () {
+                            return `${url}/storage/${response.image}`
+                        })
+                    }
+                }
+            });
             hideModal();
             toast('Profile update successfully');
         },
@@ -173,7 +184,25 @@ fromSubjectRegister.addEventListener('submit', async (e) => {
     });
     let id = $("#profileId").val()
     await $(".subject-form-update").attr("action", function () {
-        return `${url}/admin/students/${id}`
+        return `${url}/admin/student/${id}/subject`
     })
     await $(".subject-form-update").submit()
 });
+
+/// ----------------------------Permission----------------------------------------
+
+function showModalPermission() {
+    $("#myModalPermission").modal("show");
+}
+
+function hideModalPermission() {
+    $("#myModalPermission").modal("hide");
+}
+
+function permission(id) {
+    showModalPermission()
+    $("#formPermission").attr("action", function () {
+        return `${url}/admin/user/${id}/permission`
+    })
+}
+

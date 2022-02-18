@@ -21,7 +21,7 @@ class StudentFactory extends Factory
             "birthday" => $this->faker->date($format = 'Y-m-d', $max = 'now'),
             "address" => $this->faker->address,
             "image" => "images/" . $imgPath,
-            "phone" => $this->faker->regexify('/(01)[0-9]{8}/'),
+            "phone" => $this->faker->regexify('/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/'),
             "email" => $this->faker->email,
             "gender" => rand(1, 2)
         ];

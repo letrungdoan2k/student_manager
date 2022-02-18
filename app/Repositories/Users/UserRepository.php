@@ -19,14 +19,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
                 'email'    => $getInfo->email,
                 'provider' => $social,
                 'provider_id' => $getInfo->id
-            ]);
+            ])->assignRole('member');
         }
         if (!$user && $social === 'twitter') {
             $user = $this->model->create([
                 'name'     => $getInfo->name,
                 'provider' => $social,
                 'provider_id' => $getInfo->id
-            ]);
+            ])->assignRole('member');
         }
         if (!$user && $social === 'google') {
             $user = $this->model->create([
@@ -34,9 +34,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
                 'email'    => $getInfo->getEmail(),
                 'provider' => $social,
                 'provider_id' => $getInfo->getId()
-            ]);
+            ])->assignRole('member');
         }
         return $user;
     }
 
+    public function setPermission($id, $request)
+    {
+        $user = $this->findOrFail($id);
+        $user->assignRole($request['permission']);
+    }
 }

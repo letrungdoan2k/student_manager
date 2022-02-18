@@ -1,7 +1,7 @@
 @extends('admin.layouts.main')
 @section('link')
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="#">Student</a></li>
+        <li class="breadcrumb-item"><a href="{{route('students.index')}}">Student</a></li>
         <li class="breadcrumb-item active">List student</li>
     </ol>
 @endsection
@@ -86,8 +86,20 @@
                         <th>Image</th>
                         <th>Faculty</th>
                         <th>
-                            <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
-                            <a href="{{route('mail.index')}}" class="btn btn-primary"><i class="fas fa-mail-bulk"></i></a>
+                            @if(Auth::user()->hasanyrole('staff|admin'))
+                                <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
+                            @else
+                                <a href="{{route('students.create')}}" class="btn btn-primary disabled">Add</a>
+                            @endif
+                            @if(Auth::user()->hasrole('admin'))
+                                <a href="{{route('mail.index')}}" class="btn btn-primary">
+                                    <i class="fas fa-mail-bulk"></i>
+                                </a>
+                            @else
+                                <a href="{{route('mail.index')}}" class="btn btn-primary disabled">
+                                    <i class="fas fa-mail-bulk"></i>
+                                </a>
+                            @endif
                         </th>
                         </thead>
                         <tbody>
@@ -101,7 +113,11 @@
                                 <td>{{$student->email}}</td>
                                 <td>{{$student->gender_text}}</td>
                                 <td>
-                                    <img src="{{asset('storage/' . $student->image)}}" width="80">
+                                    @if(!$student->image)
+                                        null
+                                    @else
+                                        <img src="{{asset('storage/' . $student->image)}}" width="80">
+                                    @endif
                                 </td>
                                 @if(!empty($student->faculty_id))
                                     <td>{{$student->faculty->name}}</td>
@@ -109,15 +125,35 @@
                                     <td></td>
                                 @endif
                                 <td class="d-flex">
-                                    <a href="{{route('students.show', ['student' => $student->user_id])}}"
-                                       class="btn btn-info"><i class="bi bi-info-lg"></i></a>
-                                    <a href="{{route('students.edit', ['student' => $student->id])}}"
-                                       class="btn btn-warning ml-1"><i class="bi bi-pencil-square"></i></a>
-                                    {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id], 'id' => 'deleteStudent' . $student->id]) !!}
-                                    @if(Auth::user()->id == $student->user_id)
-                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1" disabled></button>
+                                    @if(Auth::user()->hasrole('member') && Auth::user()->id != $student->user_id)
+                                        <a href="{{route('students.show', ['student' => $student->user_id])}}"
+                                           class="btn btn-success disabled">
+                                            <i class="bi bi-info-lg"></i>
+                                        </a>
                                     @else
-                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1"></button>
+                                        <a href="{{route('students.show', ['student' => $student->user_id])}}"
+                                           class="btn btn-success">
+                                            <i class="bi bi-info-lg"></i>
+                                        </a>
+                                    @endif
+                                    @if(Auth::user()->hasrole('member'))
+                                        <a href="{{route('students.edit', ['student' => $student->id])}}"
+                                           class="btn btn-warning ml-1 disabled">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    @else
+                                        <a href="{{route('students.edit', ['student' => $student->id])}}"
+                                           class="btn btn-warning ml-1">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    @endif
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id], 'id' => 'deleteStudent' . $student->id]) !!}
+                                    @if(Auth::user()->id != $student->user_id && Auth::user()->hasrole('admin'))
+                                        <button type="button" onclick="onDelete({{$student->id}})"
+                                                class="bi bi-trash btn btn-danger ml-1"></button>
+                                    @else
+                                        <button type="button" onclick="onDelete({{$student->id}})"
+                                                class="bi bi-trash btn btn-danger ml-1" disabled></button>
                                     @endif
                                     {!! Form::close() !!}
                                 </td>
@@ -149,7 +185,8 @@
                         <th>Faculty</th>
                         <th>
                             <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
-                            <a href="{{route('mail.index')}}" class="btn btn-primary"><i class="fas fa-mail-bulk"></i></a>
+                            <a href="{{route('mail.index')}}" class="btn btn-primary"><i
+                                    class="fas fa-mail-bulk"></i></a>
                         </th>
                         </thead>
                         <tbody>
@@ -177,9 +214,11 @@
                                        class="btn btn-info ml-1"><i class="bi bi-pencil-square"></i></a>
                                     {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id], 'id' => 'deleteStudent' . $student->id]) !!}
                                     @if(Auth::user()->id == $student->user_id)
-                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1" disabled></button>
+                                        <button type="button" onclick="onDelete({{$student->id}})"
+                                                class="bi bi-trash btn btn-danger ml-1" disabled></button>
                                     @else
-                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1"></button>
+                                        <button type="button" onclick="onDelete({{$student->id}})"
+                                                class="bi bi-trash btn btn-danger ml-1"></button>
                                     @endif
                                     {!! Form::close() !!}
                                 </td>
@@ -211,7 +250,8 @@
                         <th>Faculty</th>
                         <th>
                             <a href="{{route('students.create')}}" class="btn btn-primary">Add</a>
-                            <a href="{{route('mail.index')}}" class="btn btn-primary"><i class="fas fa-mail-bulk"></i></a>
+                            <a href="{{route('mail.index')}}" class="btn btn-primary"><i
+                                    class="fas fa-mail-bulk"></i></a>
                         </th>
                         </thead>
                         <tbody>
@@ -239,9 +279,11 @@
                                        class="btn btn-info ml-1"><i class="bi bi-pencil-square"></i></a>
                                     {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id], 'id' => 'deleteStudent' . $student->id]) !!}
                                     @if(Auth::user()->id == $student->user_id)
-                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1" disabled></button>
+                                        <button type="button" onclick="onDelete({{$student->id}})"
+                                                class="bi bi-trash btn btn-danger ml-1" disabled></button>
                                     @else
-                                        <button type="button" onclick="onDelete({{$student->id}})" class="bi bi-trash btn btn-danger ml-1"></button>
+                                        <button type="button" onclick="onDelete({{$student->id}})"
+                                                class="bi bi-trash btn btn-danger ml-1"></button>
                                     @endif
                                     {!! Form::close() !!}
                                 </td>

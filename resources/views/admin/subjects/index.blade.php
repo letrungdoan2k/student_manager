@@ -1,10 +1,16 @@
 @extends('admin.layouts.main')
+@section('link')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{route('subjects.index')}}">Subjects</a></li>
+        <li class="breadcrumb-item active">List subject</li>
+    </ol>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <table class="table table-stripped">
+                <div class="card-body m-auto w-75">
+                    <table class="table table-stripped text-center">
                         <thead>
                         <th>STT</th>
                         <th>Name</th>
@@ -17,7 +23,7 @@
                             <tr>
                                 <td>{{($subjects->currentPage() - 1)*$subjects->perPage() + $loop->iteration}}</td>
                                 <td>{{$subject->name}}</td>
-                                <td class="d-flex">
+                                <td class="d-flex justify-content-center">
                                     <a href="{{route('subjects.show', ['subject' => $subject->id])}}"
                                        class="btn btn-info"><i class="bi bi-info-lg"></i></a>
                                     <a href="{{route('subjects.edit', ['subject' => $subject->id])}}"

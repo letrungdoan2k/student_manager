@@ -1,4 +1,10 @@
 @extends('admin.layouts.main')
+@section('link')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{route('students.index')}}">Students</a></li>
+        <li class="breadcrumb-item active">Send mail</li>
+    </ol>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -36,12 +42,10 @@
                             <td></td>
                         @endif
                         <td class="d-flex">
-                            <a href="{{route('students.show', ['student' => $student->id])}}"
+                            <a href="{{route('students.show', ['student' => $student->user_id])}}"
                                class="btn btn-info"><i class="bi bi-info-lg"></i></a>
-{{--                            <a href="{{route('students.edit', ['student' => $student->id])}}"--}}
-{{--                               class="btn btn-info ml-1"><i class="bi bi-pencil-square"></i></a>--}}
                             {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', 'student' => $student->id]]) !!}
-                            <button type="submit" class="bi bi-trash btn btn-danger ml-1"></button>
+                            <button type="button" class="bi bi-trash btn btn-danger ml-1" onclick="onDelete({{$student->id}})"></button>
                             {!! Form::close() !!}
                         </td>
                     </tr>

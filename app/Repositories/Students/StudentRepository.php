@@ -104,6 +104,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $stt = 0;
         $attributes['status'] = 0;
         $countPoint = 0;
+        $averagePoint = 0;
         if (isset($attributes['subjects'])) {
             foreach ($attributes['subject_id'] as $subject) {
                 $stt++;
@@ -113,18 +114,14 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
             if (count($attributes['subjects']) == $countSubject) {
                 $attributes['status'] = 1;
             }
-            $attributes['average_score'] = $averagePoint;
         }
+        $attributes['average_score'] = $averagePoint;
         $result->update($attributes);
         $points = [];
         if (isset($attributes['subject_id'])) {
             $points = $attributes['subject_id'];
         }
-        if (isset($attributes['register'])) {
-            $result->subjects()->attach($points);
-        } else {
-            $result->subjects()->sync($points);
-        }
+        $result->subjects()->sync($points);
         return $result;
     }
 
@@ -175,11 +172,14 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         return $student;
     }
 
-    public function updateImage($image)
+    public function updateImage($id, $request)
     {
-        $imgPath = $image['image']->store('public/images');
+        $result = $this->findOrFail($id);
+        $imgPath = $request['image']->store('public/images');
         $imgPath = str_replace('public/', '', $imgPath);
         $attributes['image'] = $imgPath;
+        $result->update($attributes);
+        return $result;
     }
 
 
@@ -220,6 +220,23 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         return true;
     }
 
-    //
+    // add subject student
+    public function addSubjectStudent($id, $request)
+    {
+        $result = $this->findOrFail($id);
+        if(isset($request['subject_id'])){
+            $result->subjects()->attach($request['subject_id']);
+        }
+        $stt = 0;
+        $countPoint = 0;
+        foreach ($result->subjects as $result){
+            $stt++;
+            $countPoint += $result->pivot->point;
+        }
+        $attributes['average_score'] = $countPoint/$stt;
+        $student= $this->findOrFail($id);
+        $student->update($attributes);
+        return $student;
+    }
 
 }

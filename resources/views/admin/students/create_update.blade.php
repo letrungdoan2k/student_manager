@@ -1,8 +1,11 @@
 @extends('admin.layouts.main')
+@section('link')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{route('students.index')}}">Student</a></li>
+        <li class="breadcrumb-item active">Create and update</li>
+    </ol>
+@endsection
 @section('content')
-    {{--    @if(!empty($errors->all()))--}}
-    {{--        @dd($errors->all())--}}
-    {{--    @endif--}}
     <div class="row">
         <div class="col-12">
             <div class="card">

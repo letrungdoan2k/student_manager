@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Repositories\Students\StudentRepositoryInterface;
 use App\Repositories\Users\UserRepositoryInterface;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -29,7 +27,7 @@ class RegisterController extends Controller
     {
         $request = $request->all();
         $request['password'] = bcrypt($request['password']);
-        $request['user_id'] = $this->userRepository->create($request)->id;
+        $request['user_id'] = $this->userRepository->create($request)->assignRole('member')->id;
         $this->studentRepository->create($request);
         return redirect(route('login'));
     }

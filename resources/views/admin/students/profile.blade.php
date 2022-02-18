@@ -1,4 +1,10 @@
 @extends('admin.layouts.main')
+@section('link')
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{{route('students.index')}}">Students</a></li>
+        <li class="breadcrumb-item active">Profile</li>
+    </ol>
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="topbar border-bottom">
@@ -9,17 +15,18 @@
             </ul>
         </div>
         <div class="content mt-3 d-flex">
-            <div class="col-md-4 bg-light p-2">
+            <div class="col-md-6 bg-light p-2">
                 @if(!empty($student->image))
-                    <img src="{{asset('storage/' . $student->image)}}" class="img-profile col-md-5 d-inline-block"/>
+                    <img src="{{asset('storage/' . $student->image)}}"
+                         class="img-profile col-md-5 d-inline-block avataProfile"/>
                 @else
-                    <img src="{{ asset('adminlte') }}/dist/img/avata.jpg" class="img-profile col-md-5 d-inline-block"/>
+                    <img src="{{ asset('adminlte') }}/dist/img/avata.jpg"
+                         class="img-profile col-md-5 d-inline-block avataProfile"/>
                 @endif
                 <div class="d-inline-block">
-                    <h5>{{ $student->name }}</h5>
-                    <p>Student</p>
+                    <h5 id="nameH5">{{ $student->name }}</h5>
                 </div>
-                    <input type="hidden" id="profileId" value="{{ $student->id }}">
+                <input type="hidden" id="profileId" value="{{ $student->id }}">
                 <div class="p-2 mt-3">
                     <p><b>email: </b><span id="profileEmail">{{ $student->email }}</span></p>
                     <p><b>Phone: </b><span id="profilePhone">{{ $student->phone }}</span></p>
@@ -33,16 +40,25 @@
                     </p>
                 </div>
                 <!-- Button trigger modal -->
-                <div class="col-auto mt-3">
-                    <button class="btn btn-primary" onclick="profileStudent({{$student->id}})">
-                        Profile-update
-                    </button>
-                    <button class="btn btn-warning" onclick="registerSubject({{$student->id}})">
-                        Register subject
-                    </button>
-                </div>
+                @if(Auth::user()->hasanyrole('staff|admin') || Auth::user()->id == $student->user_id)
+                    <div class="col-auto mt-3">
+                        <button class="btn btn-primary" onclick="profileStudent({{$student->id}})">
+                            Profile-update
+                        </button>
+                        @if(Auth::user()->id == $student->user_id)
+                            <button class="btn btn-warning" onclick="registerSubject({{$student->id}})">
+                                Register subject
+                            </button>
+                        @endif
+                        @if(Auth::user()->hasrole('admin'))
+                            <button class="btn btn-success" onclick="permission({{$student->user_id}})">
+                                Permission
+                            </button>
+                        @endif
+                    </div>
+                @endif
             </div>
-            <div class="col-md-8 bg-light p-2">
+            <div class="col-md-6 bg-light p-2">
                 <div class="row">
                     <div class="col-xl-12">
                         <form class="kt-form kt-form--label-right">
@@ -92,12 +108,22 @@
                                                 <input type="text" value="{{ $student->address }}" disabled
                                                        name="address" class="form-control"></div>
                                         </div>
+                                        @if(!empty($student->faculty_id))
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-xl-3 col-lg-3 col-form-label">Faculty</label>
+                                                <div class="col-lg-9 col-xl-6">
+                                                    <input type="text" value="{{ $student->faculty->name }}" disabled
+                                                           name="faculty" class="form-control"></div>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="row">
-                                        <label class="col-xl-3"></label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <h3 class="kt-section__title kt-section__title-sm">Average-score
-                                                : <span>{{ $student->average_score }}</span></h3>
+                                        <label class="col-xl-5"><h3>Average-score:</h3></label>
+                                        <div class="col-lg-9 col-xl-3">
+                                            <h3 class="kt-section__title kt-section__title-sm">
+                                                <span>{{ number_format($student->average_score, 2) }}</span>
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
