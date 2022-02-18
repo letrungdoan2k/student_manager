@@ -18,8 +18,12 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
     }
 
     // filter
-    public function search($request, $pageNumber = 10)
+    public function search($request)
     {
+        $pageNumber = 20;
+            if (!empty($request['perPage'])) {
+                $pageNumber = $request['perPage'];
+            }
         // filter age
         $query = $this->model->query();
         $minAge = isset($request['from-age']) ? $request['from-age'] : '';
@@ -56,7 +60,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
                 $query->where('point', '>=', $minPoint)->where('point', '<=', $maxPoint);
             });
         }
-        return $query->orderByDesc('updated_at')->paginate($pageNumber);
+        return $query->orderByDesc('updated_at')->with('faculty')->paginate($pageNumber);
     }
 
     // create
@@ -153,7 +157,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
         $query->with('subjects')
             ->whereHas('subjects', null, 0)
             ->orWhereHas('subjects', null, '<', $countSubject);
-        $student = $query->orderByDesc('updated_at')->paginate($pageNumber);
+        $student = $query->orderByDesc('updated_at')->with('faculty')->paginate($pageNumber);
         return $student;
     }
 
@@ -162,7 +166,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
     {
         $query = $this->model->query();
         $query->whereHas('subjects', null, $countSubject);
-        return $query->orderByDesc('updated_at')->paginate($pageNumber);
+        return $query->orderByDesc('updated_at')->with('faculty')->paginate($pageNumber);
     }
 
     // profile

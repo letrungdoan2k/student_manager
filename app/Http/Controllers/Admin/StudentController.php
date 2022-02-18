@@ -42,7 +42,13 @@ class StudentController extends Controller
         $countSubject = $this->subjectRepository->count();
         $studentDone = $this->studentRepository->done($countSubject);
         $studentUnfinised = $this->studentRepository->unfinished($countSubject);
-        return view('admin.students.index', compact('studentAll', 'studentDone', 'studentUnfinised', 'subjects', 'request'));
+        $perPage = [
+            "20" => 20,
+            "100" => 100,
+            "1000" => 1000,
+            "2000" => 2000
+        ];
+        return view('admin.students.index', compact('studentAll', 'studentDone', 'studentUnfinised', 'subjects', 'request', 'perPage'));
     }
 
     /**
