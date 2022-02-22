@@ -36,7 +36,7 @@
                     <a href="{{route('students.index')}}" class="nav-link ">
                         <i class="bi bi-people-fill" style="font-size: 22px;"></i>
                         <p class="ml-2">
-                            Student
+                            {{__('messages.Student') }}
                         </p>
                     </a>
                 </li>
@@ -45,7 +45,7 @@
                     <a href="{{route('faculties.index')}}" class="nav-link ">
                         <i class="bi bi-journal-bookmark-fill" style="font-size: 22px;"></i>
                         <p class="ml-2">
-                            Faculty
+                            {{__('messages.Faculty') }}
                         </p>
                     </a>
                 </li>
@@ -54,7 +54,7 @@
                     <a href="{{route('subjects.index')}}" class="nav-link ">
                         <i class="bi bi-book-fill" style="font-size: 22px;"></i>
                         <p class="ml-2">
-                            Subject
+                            {{__('messages.Subject') }}
                         </p>
                     </a>
                 </li>

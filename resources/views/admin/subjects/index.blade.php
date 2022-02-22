@@ -1,8 +1,8 @@
 @extends('admin.layouts.main')
 @section('link')
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{route('subjects.index')}}">Subjects</a></li>
-        <li class="breadcrumb-item active">List subject</li>
+        <li class="breadcrumb-item"><a href="{{route('subjects.index')}}">{{__('messages.Subject')}}</a></li>
+        <li class="breadcrumb-item active">{{__('messages.Subject-list')}}</li>
     </ol>
 @endsection
 @section('content')
@@ -13,9 +13,9 @@
                     <table class="table table-stripped text-center">
                         <thead>
                         <th>STT</th>
-                        <th>Name</th>
+                        <th>{{__('messages.Subject-name')}}</th>
                         <th>
-                            <a href="{{route('subjects.create')}}" class="btn btn-primary">Add</a>
+                            <a href="{{route('subjects.create')}}" class="btn btn-primary">{{__('messages.Add')}}</a>
                         </th>
                         </thead>
                         <tbody>

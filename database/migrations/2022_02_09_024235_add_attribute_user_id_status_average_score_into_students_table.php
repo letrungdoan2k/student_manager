@@ -17,6 +17,7 @@ class AddAttributeUserIdStatusAverageScoreIntoStudentsTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->double('average_score')->nullable();
             $table->tinyInteger('status')->nullable();
+            $table->string('slug')->unique();
 
             $table->foreign('user_id')
                 ->references('id')
@@ -36,6 +37,7 @@ class AddAttributeUserIdStatusAverageScoreIntoStudentsTable extends Migration
             $table->dropColumn('user_id');
             $table->dropColumn('average_score');
             $table->dropColumn('status');
+            $table->dropColumn('slug');
         });
     }
 }

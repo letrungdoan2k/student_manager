@@ -1,8 +1,8 @@
 @extends('admin.layouts.main')
 @section('link')
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{route('students.index')}}">Student</a></li>
-        <li class="breadcrumb-item active">Create and update</li>
+        <li class="breadcrumb-item"><a href="{{route('students.index')}}">{{__('messages.Student')}}</a></li>
+        <li class="breadcrumb-item active">{{__('messages.Create-and-update')}}</li>
     </ol>
 @endsection
 @section('content')
@@ -10,7 +10,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="card-title">{{!empty($student->id) ? 'Edit' : 'Add'}}</h1>
+                    <h1 class="card-title">{{!empty($student->id) ? __('messages.Edit') : __('messages.Add')}}</h1>
                 </div>
                 <div class="card-body">
                     @if(!empty($student->id))
@@ -22,26 +22,26 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                {!!  Form::label('name', 'Name:') !!}
+                                {!!  Form::label('name', __('messages.Name').':') !!}
                                 {!!  Form::text('name', $student->name , ['class' => 'form-control']) !!}
                                 @error('name')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
-                                {!!  Form::label('faculty_id', 'Faculty:') !!}
+                                {!!  Form::label('faculty_id', __('messages.Faculty').':') !!}
                                 <br>
                                 {!! Form::select('faculty_id', $faculties, $student->faculty_id, ['class' => 'form-control']) !!}
                                 @error('faculty_id')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
-                                {!!  Form::label('birthday', 'Birthday:') !!}
+                                {!!  Form::label('birthday', __('messages.Birthday').':') !!}
                                 {!!  Form::date('birthday', !empty($student->id) ? $student->date : \Carbon\Carbon::now(), ['class' => 'form-control']) !!}
                                 @error('birthday')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
-                                {!!  Form::label('image', 'Image:') !!}
+                                {!!  Form::label('image', __('messages.Avatar').':') !!}
                                 {!!  Form::file('image', ['class' => 'form-control']) !!}
                                 @if(!empty($student->id))
                                     <img src="{{asset('storage/' . $student->image)}}" width="80">
@@ -53,25 +53,25 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                {!!  Form::label('email', 'Email:') !!}
+                                {!!  Form::label('email', __('messages.Email').':') !!}
                                 {!!  Form::email('email', $student->email, ['class' => 'form-control']) !!}
                                 @error('email')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
-                                {!!  Form::label('phone', 'Phone:') !!}
+                                {!!  Form::label('phone', __('messages.Phone').':') !!}
                                 {!!  Form::number('phone', $student->phone, ['class' => 'form-control']) !!}
                                 @error('phone')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
-                                {!!  Form::label('address', 'Address:') !!}
+                                {!!  Form::label('address', __('messages.Address').':') !!}
                                 {!!  Form::text('address', $student->address, ['class' => 'form-control']) !!}
                                 @error('address')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                                 <br>
-                                {!!  Form::label('gender', 'Gender:') !!}
+                                {!!  Form::label('gender', __('messages.Gender').':') !!}
                                 <br>
                                 {!! Form::select('gender', $genders, $student->gender, ['class' => 'form-control']) !!}
                                 @error('gender')
@@ -79,7 +79,7 @@
                                 @enderror
                                 @if(empty($student->id))
                                     <br>
-                                    {!!  Form::label('password', 'Password(defaults):') !!}
+                                    {!!  Form::label('password', __('messages.Password(defaults)').':') !!}
                                     {!!  Form::text('password', 'password', ['class' => 'form-control', 'placeholder' => 'password']) !!}
                                     @error('password')
                                     <span class="text-danger">{{$message}}</span>
@@ -89,15 +89,15 @@
                         </div>
                         <div class="col-12 d-flex justify-content-start mt-5">
                             <br>
-                            <h1>Add Point</h1>
+                            <h1>{{__('messages.Add-point')}}</h1>
                         </div>
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-4">
-                                    {!!  Form::label('subject_id', 'Subject:') !!}
+                                    {!!  Form::label('subject_id', __('messages.Subject').':') !!}
                                 </div>
                                 <div class="col-4">
-                                    {!!  Form::label('point', 'Point:') !!}
+                                    {!!  Form::label('point', __('messages.Point').':') !!}
                                 </div>
                                 <div class="col-4">
                                     <i class="bi bi-plus-square-fill btn btn-primary" id="addForm"></i>
@@ -159,8 +159,8 @@
                         <br>
                         <div class="col-12 d-flex justify-content-end mt-5">
                             <br>
-                            <a href="{{route('students.index')}}" class="btn btn-danger">Exit</a>
-                            &nbsp;{!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
+                            <a href="{{route('students.index')}}" class="btn btn-danger">{{__('messages.Exit')}}</a>
+                            &nbsp;{!! Form::submit(__('messages.Submit'), ['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
                     {!! Form::close() !!}

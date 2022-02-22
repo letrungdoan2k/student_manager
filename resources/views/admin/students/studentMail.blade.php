@@ -1,8 +1,8 @@
 @extends('admin.layouts.main')
 @section('link')
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{route('students.index')}}">Students</a></li>
-        <li class="breadcrumb-item active">Send mail</li>
+        <li class="breadcrumb-item"><a href="{{route('students.index')}}">{{__('messages.Student')}}</a></li>
+        <li class="breadcrumb-item active">{{__('messages.Send-mail')}}</li>
     </ol>
 @endsection
 @section('content')
@@ -11,16 +11,16 @@
             <table class="table table-striped">
                 <thead>
                 <th>STT</th>
-                <th>Name</th>
-                <th>Birthday</th>
-                <th>Address</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Gender</th>
-                <th>Image</th>
-                <th>Faculty</th>
+                <th>{{__('messages.Name')}}</th>
+                <th>{{__('messages.Birthday')}}</th>
+                <th>{{__('messages.Address')}}</th>
+                <th>{{__('messages.Phone')}}</th>
+                <th>{{__('messages.Email')}}</th>
+                <th>{{__('messages.Gender')}}</th>
+                <th>{{__('messages.Avatar')}}</th>
+                <th>{{__('messages.Faculty')}}</th>
                 <th>
-                    <a href="{{route('mail.store')}}" class="btn btn-primary">Send mail</a>
+                    <a href="{{route('mail.store')}}" class="btn btn-primary">{{__('messages.Send-mail')}}</a>
                 </th>
                 </thead>
                 <tbody>

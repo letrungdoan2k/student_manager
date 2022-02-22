@@ -81,7 +81,7 @@ return [
     */
 
     'locale' => 'en',
-
+    'locales' => ['vi', 'en'],
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------
@@ -177,6 +177,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
     ],
 
     /*

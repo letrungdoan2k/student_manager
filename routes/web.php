@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\LangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +15,14 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('language/{language}', [LangController::class, 'changeLanguage'])->name('language');
+
 Route::prefix('admin')->middleware('isLogin')->group(function () {
     Route::group(['namespace' => 'App\Http\Controllers\Admin'], function () {
         Route::get('/', 'DashboardController@index')->name('dashboard');
         Route::resource('faculties', 'FacultyController');
         Route::resource('students', 'StudentController');
+        Route::get('/profile-{slug}', 'StudentController@show')->name('show.student');
         Route::put("/student/{id}/subject", "StudentController@updateSubject");
         Route::resource('subjects', 'SubjectController');
         Route::put('user/{id}/permission', 'UserController@permission');

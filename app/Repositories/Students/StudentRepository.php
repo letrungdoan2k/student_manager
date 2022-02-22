@@ -172,7 +172,7 @@ class StudentRepository extends BaseRepository implements StudentRepositoryInter
     // profile
     public function profile($id)
     {
-        $student = $this->model->query()->where('user_id', $id)->first();
+        $student = $this->model->query()->where('slug', $id)->first();
         return $student;
     }
 
